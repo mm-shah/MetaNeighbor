@@ -54,8 +54,3 @@ run_MetaNeighbor_US <- function(vargenes, data, celltypes, pheno){
   return(cell_NV)
 
 }
-
-
-
-
-
