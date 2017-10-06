@@ -28,3 +28,4 @@ run_MetaNeighbor <- function(data, experiment_labels, celltype_labels, genesets,
   save(nv_mat, file=paste(file_ext, "IDscore.matrix.Rdata", sep="."))
   return(rowMeans(nv_mat, na.rm = T))
 }
+
