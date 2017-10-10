@@ -1,11 +1,22 @@
 Package: MetaNeighbor
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
+Title: Method to rapidly assess cell type identity using gene sets
+Version: 0.0.0.9000
+Author@R: c(
+    person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
+    person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")),
+    person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb)),
+    person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb)))
+Description: MetaNeighbor is a replication framework, that allows researchers to quantify the
+    degree to which cell types replicate across datasets, and to rapidly identify clusters 
+    with high similarity for further testing. It calculates correlations between all pairs of
+    cells that user aims to compare across datasets based on the expression of a set of 
+    genes. It then performs crosdataset validation by hiding all type labels for one dataset 
+    at a time. Finally it predicts the cell type labels of the test set by running a neighbor
+    voting algorithm to predict the identity of the held-out cells based on the similarity to
+    the training data.
+License: MIT + file LICENSE
+Depends: R(>= 3.3)
+Imports: gplots, RColorBrewer
+Suggests: knitr, rmarkdown, testthat
 LazyData: true
