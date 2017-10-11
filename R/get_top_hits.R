@@ -4,7 +4,7 @@ get_top_hits <- function(cell_NV, pheno, threshold=0.95, filename) {
   m <- match(rownames(cell_NV), rownames(type_by_study))
   f_a <- !is.na(m)
   f_b <- m[f_a]
-  cell_NV <-cell_NV[f_a,f_a]
+  cell_NV <- cell_NV[f_a,f_a]
   type_by_study <- type_by_study[f_b,]
 
   for(i in 1:dim(type_by_study)[2]){
