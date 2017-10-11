@@ -5,8 +5,12 @@ Version: 0.0.0.9000
 Author@R: c(
     person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
     person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")),
-    person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb)),
-    person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb)))
+    person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb")),
+    person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb")))
+Author: c(
+    person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
+    person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")))
+Maintainer: Megan Crow <mcrow@cshl.edu>
 Description: MetaNeighbor is a replication framework, that allows researchers to quantify the
     degree to which cell types replicate across datasets, and to rapidly identify clusters 
     with high similarity for further testing. It calculates correlations between all pairs of
@@ -17,6 +21,6 @@ Description: MetaNeighbor is a replication framework, that allows researchers to
     the training data.
 License: MIT + file LICENSE
 Depends: R(>= 3.4.2)
-Imports: gplots (>=3.0.1), RColorBrewer (>= 1.1-2)
-Suggests: knitr (>=1.17), rmarkdown (>= 1.6), testthat (>= 1.0.2)
+Imports: gplots (>= 3.0.1), RColorBrewer (>= 1.1-2)
+Suggests: knitr (>= 1.17), rmarkdown (>= 1.6), testthat (>= 1.0.2)
 LazyData: true
