@@ -1,3 +1,25 @@
+#' Identify a highly variable gene set
+#'
+#' Certain function
+#'
+#' @param data A gene-by-sample expression matrix.
+#' @param pheno A sample metadata table, that lists the dataset and cell type for each sample with column names “Study_ID” and “Celltype”.
+#'
+#' @return The output is a cell type-by-cell type mean AUROC matrix, which is built by
+#' treating each pair of cell types as testing and training data for MetaNeighbor, then
+#' taking the average AUROC for each pair (NB scores will not be identical because each
+#' test cell type is scored out of its own dataset, and the differential heterogeneity
+#' of datasets will influence scores).
+#'
+#' @keywords
+#'
+#' @examples
+#' load("MetaNeighbor_sample_data.Rdata")
+#' var_genes = get_variable_genes(data, pheno)
+#' var_genes
+#' @export
+#'
+
 get_variable_genes <- function(data, pheno) {
   var_genes1 <- vector("list")
   experiment <- unique(pheno$Study_ID)
