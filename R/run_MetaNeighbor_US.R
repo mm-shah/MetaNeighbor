@@ -35,7 +35,7 @@ run_MetaNeighbor_US <- function(vargenes, data, celltypes, pheno){
     predicts_temp     <- apply(abs(predicts_temp), MARGIN = 2, FUN = rank, na.last= "keep", ties.method="average")
 
     filter  <- matrix(0, ncol=length(celltypes), nrow=dim(pheno2)[1])
-    matches       <- match(pheno2$Celltype, colnames(cell_labels)[i])
+    matches <- match(pheno2$Celltype, colnames(cell_labels)[i])
     filter[!is.na(matches),1:length(celltypes)] <- 1
 
     negatives = which(filter == 0, arr.ind = T)
