@@ -16,7 +16,7 @@ Description: MetaNeighbor is a replication framework, that allows researchers to
     voting algorithm to predict the identity of the held-out cells based on the similarity to
     the training data.
 License: MIT + file LICENSE
-Depends: R(>= 3.3)
-Imports: gplots, RColorBrewer
-Suggests: knitr, rmarkdown, testthat
+Depends: R(>= 3.4.2)
+Imports: gplots (>=3.0.1), RColorBrewer (>= 1.1-2)
+Suggests: knitr (>=1.17), rmarkdown (>= 1.6), testthat (>= 1.0.2)
 LazyData: true
