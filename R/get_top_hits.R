@@ -1,3 +1,22 @@
+#' Find reciprocal top hits
+#'
+#' Identifies reciprocal top hits and high scoring cell type pairs
+#'
+#' @param cell_NV A set of high variance genes.
+#' @param pheno A sample metadata table, that lists the dataset and cell type for each sample with column names “Study_ID” and “Celltype”.
+#' @param threshold Default value 0.95. Must be between 0-100
+#' @param filename Set path and name of output file.
+#'
+#' @return Creates a file and returns with top hits who have AUROC value greater than or equal to threshold value
+#' @keywords
+#'
+#' @examples
+#' load("MetaNeighbor_sample_data.Rdata")
+#' top_hits=get_top_hits(celltype.NV,pheno,threshold=0.9,filename="filename.txt")
+#' top_hits
+#' @export
+#'
+
 get_top_hits <- function(cell_NV, pheno, threshold=0.95, filename) {
 
   type_by_study <- table(pheno[ , c("Celltype", "Study_ID")])
