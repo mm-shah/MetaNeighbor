@@ -42,8 +42,8 @@ neighbor_voting_LeaveOneExpOut <- function( exp_labels, cell_labels, network, me
   filter <- matrix(cell_labels, nrow = c, ncol = length(e)*l)
 
   for (i in 1:length(e)){
-    d<-which(exp_labels != i)
-    a<-which(exp_cols ==i )
+    d <- which(exp_labels != i)
+    a <- which(exp_cols ==i )
     filter[d,a] <- NA
   }
 
