@@ -1,3 +1,20 @@
+#' Runs neighbor voting algorithm.
+#'
+#' It will perform certain fucntion
+#'
+#' @param exp_labels A numerical vector that indicates the source of each sample.
+#' @param cell_labels A matrix that indicates the cell type of each sample.
+#' @param network Gene sets of interest provided as a list of vectors.
+#' @param means Defaut TRUE, mean of ROC values will be returned. If FLASE, list of ROC values will be returned
+#' @return aucs array of aucs for each group in annotations
+#'
+#' @keywords neighbor voting, AUROC
+#'
+#' @examples
+#'
+#' @export
+#'
+
 neighbor_voting_LeaveOneExpOut <- function( exp_labels, cell_labels, network, means=T){
 
   # genes.label : needs to be in 1s and 0s
