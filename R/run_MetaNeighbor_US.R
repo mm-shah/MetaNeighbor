@@ -1,3 +1,26 @@
+#' make an educated guess about the overlaps without requiring in-depth knowledge
+#' of marker genes. High variance gene sets provides improved scores for known cell
+#' types.
+#'
+#' @param vargenes A set of high variance genes.
+#' @param data A gene-by-sample expression matrix.
+#' @param celltypes A vector that lists the names of all cell types.
+#' @param pheno A sample metadata table, that lists the dataset and cell type for each sample with column names: Study_ID and Celltype.
+#'
+#' @return The output is a cell type-by-cell type mean AUROC matrix, which is built by
+#' treating each pair of cell types as testing and training data for MetaNeighbor, then
+#' taking the average AUROC for each pair (NB scores will not be identical because each
+#' test cell type is scored out of its own dataset, and the differential heterogeneity
+#' of datasets will influence scores).
+#' @keywords
+#'
+#' @examples
+#' load("MetaNeighbor_sample_data.Rdata")
+#' var_genes = get_variable_genes(data, pheno)
+#' celltype_NV=run_MetaNeighbor_US(var.genes, data, celltypes, pheno)
+#' @export
+#'
+
 run_MetaNeighbor_US <- function(vargenes, data, celltypes, pheno){
 
   cell_labels <- matrix(0, ncol=length(celltypes), nrow=dim(pheno)[1])
