@@ -30,7 +30,7 @@ Introduction
 
 The purpose of this method is to measure the similarity of cells across single cell RNA-sequencing (scRNA-seq) datasets by sampling from both random and functionally defined gene sets. MetaNeighbor works on the basis that cells of the same type should have more similar gene expression profiles than cells of different types. In other words, when we compare the expression profile between T-cells and hepatocytes for a given gene set, we should see higher correlations among all T-cells than we do between T-cells and hepatocytes. This is illustrated in the schematic below:
 
-![]( mm-shah/MetaNeighbor/vignettes/figures/coexp-schem.png?raw=true)
+![](/vignettes/figures/coexp-schem.png?raw=true)
 
 In our approach, this is formalized through neighbor voting based on cell-cell similarities, which will be described in detail in the Methods section. In short, MetaNeighbor takes four inputs: a gene-by-sample expression matrix (“data”), a set of labels indicating each sample’s dataset of origin (“experiment labels”), a set of labels indicating each sample’s cell type (“cell type labels”) and a set of genes (“gene sets”). The output is a performance vector (“AUROC scores”), which is the mean area under the receiver operator characteristic curve (AUROC) for the given task. This score reflects our ability to rank cells of the same known type higher than those of other types within a dataset, and can be interpreted as the probability that we will be correct about making a binary classification for a given cell (e.g. neuron vs. non-neuronal cell). An AUROC score of 0.5 means that we have performed as well as if we had randomly guessed the cell’s identity.
 
@@ -161,7 +161,7 @@ hist(AUROC.scores,main="Sst Chodl",xlab="AUROC Scores",breaks=10,xlim=c(0,1))
 abline(v=mean(AUROC.scores),col="red",lty=2,lwd=2)
 ```
 
-![](08.28.2017_vignette_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png)
+![](/vignettes/figures/unnamed-chunk-4-1.png?raw=true)
 
 AUROC scores greater than 0.5 indicate improvement over randomly guessing the identity of the cell type of interest.
 
@@ -264,7 +264,7 @@ breaks=seq(0,1,length=101)
 heatmap.2(celltype.NV,trace="none",density.info="none",col=cols,breaks=breaks,cexRow=0.6,cexCol=0.6)
 ```
 
-![](08.28.2017_vignette_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-9-1.png)
+![](/vignettes/figures/unnamed-chunk-9-1.png?raw=true)
 
 This plot shows the AUROC scores between each testing and training pair. Red indicates a higher score and blue indicates a lower score. Note that the diagonal is not equal to one. This is because of the scoring system: cell types that are ‘promiscuous’ (i.e., have broad similarity to many types) will tend to have higher node degrees in the network. Differences in degree across cell types will affect scores as predictions are standardized by this factor. Within-dataset scores are shown for visualization purposes only, and should not be used for replicability inference.
 
