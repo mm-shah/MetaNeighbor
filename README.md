@@ -1,17 +1,3 @@
----
-title: "MetaNeighbor"
-author: "Megan Crow, Jesse Gillis"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-bibliography: MetaNeighbor.bib
-graphics: yes
-vignette: >
-  %\VignetteIndexEntry{MetaNeighbor user guide}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignettePackage{MetaNeighbor}
-  %\VignetteEncoding{UTF-8}
----
-
 MetaNeighbor: a method to rapidly assess cell type identity using both functional and random gene sets
 ================
 Megan Crow, Sara Ballouz, Jesse Gillis, Manthan Shah
