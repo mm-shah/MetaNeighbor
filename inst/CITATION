@@ -1,0 +1,10 @@
+bibentry(bibtype = "unpublished",
+    title = "Addressing the loomming identity crisis in single cell RNA-seq",
+    author = c(person("Megan", "Crow"),
+             person("Anirban", "Paul"),
+             person("Sara", "Ballouz"),
+             person("Josh", "Huang"),
+             person("Jesse", "Gillis")),
+    year = "2017",
+    note = "Published in bioRxiv",
+    doi = "10.1101/150524")
