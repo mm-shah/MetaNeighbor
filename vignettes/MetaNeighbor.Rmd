@@ -391,7 +391,7 @@ heatmap.2(celltype_NV,
 This plot shows the AUROC scores between each testing and training pair. Red
 indicates a higher score and blue indicates a lower score. Note that the 
 diagonal is not equal to one. This is because of the scoring system: cell types
-that are âpromiscuous' (i.e., have broad similarity to many types) will tend to
+that are 'promiscuous' (i.e., have broad similarity to many types) will tend to
 have higher node degrees in the network. Differences in degree across cell types
 will affect scores as predictions are standardized by this factor.
 Within-dataset scores are shown for visualization purposes only, and should not
