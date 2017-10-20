@@ -145,7 +145,7 @@ and example data [here](https://github.com/mm-shah/MetaNeighbor) and load them
 into your R session:
 
 ``` r
-data(MetaNeighbor_sample_data.RData)
+data(MetaNeighbor_sample_data)
 AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
                          experiment_labels = MetaNeighbor_sample_data$exp.lab,
                          celltype_labels = MetaNeighbor_sample_data$cell.lab,
