@@ -53,16 +53,16 @@ illustrated in the schematic below:
 ![](coexp-schem.png)
 
 In our approach, this is formalized through neighbor voting based on cell-cell similarities, which will be described in detail in the Methods section. In short
-, MetaNeighbor takes four inputs: a gene-by-sample expression matrix (âdataâ), a
-set of labels indicating each sampleâs dataset of origin (âexperiment labelsâ),
-a set of labels indicating each sampleâs cell type (âcell type labelsâ) and a
-set of genes (âgene setsâ). The output is a performance vector (âAUROC scoresâ),
+, MetaNeighbor takes four inputs: a gene-by-sample expression matrix ("data"), a
+set of labels indicating each sample's dataset of origin ("experiment labels"),
+a set of labels indicating each sample's cell type ("cell type labels") and a
+set of genes ("gene sets"). The output is a performance vector ("AUROC scores"),
 which is the mean area under the receiver operator characteristic curve (AUROC)
 for the given task. This score reflects our ability to rank cells of the same
 known type higher than those of other types within a dataset, and can be
 interpreted as the probability that we will be correct about making a binary classification for a given cell (e.g. neuron vs. non-neuronal cell). An AUROC
 score of 0.5 means that we have performed as well as if we had randomly guessed
-the cellâs identity.
+the cell's identity.
 
 This is a fully supervised analysis, and requires knowledge of the corresponding
 cell types across datasets. However, we have also used some heuristic measures
@@ -78,11 +78,11 @@ Supervised
 
 MetaNeighbor requires four inputs:
 
-1.  A gene-by-sample expression matrix (âdataâ)
-2.  A numerical vector that indicates the source of each sample (âexperiment
-labelsâ)
-3.  A matrix that indicates the cell type of each sample (âcell type labelsâ)
-4.  Gene sets of interest (âgene setsâ) provided as a list of vectors
+1.  A gene-by-sample expression matrix ("data")
+2.  A numerical vector that indicates the source of each sample ("experiment
+labels")
+3.  A matrix that indicates the cell type of each sample ("cell type labels")
+4.  Gene sets of interest ("gene sets") provided as a list of vectors
 
 There are three outputs of the method:
 
@@ -98,11 +98,11 @@ Unsupervised
 
 Unsupervised Metaneighbor requires four inputs:
 
-1.  A gene-by-sample expression matrix (âdataâ)
+1.  A gene-by-sample expression matrix ("data")
 2.  A sample metadata table, that lists the dataset and cell type for each
-sample (âphenoâ)
-3.  A vector that lists the names of all cell types (âcelltypesâ)
-4.  A set of high variance genes (âvar.genesâ)
+sample ("pheno")
+3.  A vector that lists the names of all cell types ("celltypes")
+4.  A set of high variance genes ("var.genes")
 
 The output of the method is a cell type-by-cell type matrix containing average
 AUROC scores for each pair of cell types.
@@ -198,13 +198,13 @@ load("./data/MetaNeighbor_sample_data.RData")
 ### Run MetaNeighbor
 
 MetaNeighbor has three outputs, two of which will be written out to external
-files. Specify the desired path and file name using the file\_ext variable (e.g. âfilenameâ)
+files. Specify the desired path and file name using the file\_ext variable (e.g. "filename")
 
 As MetaNeighbor runs, it outputs a number indicating the gene set that is being
 currently evaluated. When all gene sets have been tested, MetaNeighbor will
 return a vector of scores representing the mean for each. A list containing the
-AUROC score for each dataset, cell type and gene set can be found in the âfilename.IDscore.list.RDataâ file that will be saved, and matrix containing the
-mean score for each cell type can be found in âfilename.IDscore.matrix.Rdataâ.
+AUROC score for each dataset, cell type and gene set can be found in the "filename.IDscore.list.RData" file that will be saved, and matrix containing the
+mean score for each cell type can be found in "filename.IDscore.matrix.Rdata".
 
 ``` r
 AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
@@ -277,11 +277,11 @@ in-depth knowledge of marker genes. This was based on our observation that large
 
 Unsupervised Metaneighbor requires four inputs:
 
-1.  A gene-by-sample expression matrix (âdataâ)
+1.  A gene-by-sample expression matrix ("data")
 2.  A sample metadata table, that lists the dataset and cell type for each
-sample with column names âStudy\_IDâ and âCelltypeâ (âphenoâ)
-3.  A vector that lists the names of all cell types (âcelltypesâ)
-4.  A set of high variance genes (âvar.genesâ)
+sample with column names "Study\_ID" and "Celltype" ("pheno")
+3.  A vector that lists the names of all cell types ("celltypes")
+4.  A set of high variance genes ("var.genes")
 
 The output is a cell type-by-cell type mean AUROC matrix, which is built by
 treating each pair of cell types as testing and training data for MetaNeighbor,
@@ -289,7 +289,7 @@ then taking the average AUROC for each pair (NB scores will not be identical
 because each test cell type is scored out of its own dataset, and the
 differential heterogeneity of datasets will influence scores). When comparing
 datasets that contained similar cell types, we found that cell types that were
-the best hit for one another (âreciprocal top hitsâ), and cell types with scores
+the best hit for one another ("reciprocal top hits"), and cell types with scores
 &gt;0.9 tended to be good candidates for downstream tests of cell type identity
 using Supervised MetaNeighbor. This rule will not hold when experiments contain
 wholly different cell types (e.g., comparing brain to pancreas will likely yield
@@ -391,7 +391,7 @@ heatmap.2(celltype_NV,
 This plot shows the AUROC scores between each testing and training pair. Red
 indicates a higher score and blue indicates a lower score. Note that the 
 diagonal is not equal to one. This is because of the scoring system: cell types
-that are âpromiscuousâ (i.e., have broad similarity to many types) will tend to
+that are âpromiscuous' (i.e., have broad similarity to many types) will tend to
 have higher node degrees in the network. Differences in degree across cell types
 will affect scores as predictions are standardized by this factor.
 Within-dataset scores are shown for visualization purposes only, and should not
