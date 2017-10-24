@@ -14,12 +14,11 @@
 #' or equal to threshold value
 
 #' @examples
-#' data(MetaNeighbor_US_data.RData)
+#' data(MetaNeighbor_US_data)
 #' var_genes = get_variable_genes(MetaNeighbor_US_data$data,
 #'                                MetaNeighbor_US_data$pheno)
 #' celltype_NV = run_MetaNeighbor_US(var_genes,
 #'                                   MetaNeighbor_US_data$data,
-#'                                   MetaNeighbor_US_data$celltypes,
 #'                                   MetaNeighbor_US_data$pheno)
 #' top_hits = get_top_hits(celltype_NV,
 #'                         MetaNeighbor_US_data$pheno,
@@ -32,16 +31,17 @@
 
 get_top_hits <- function(cell_NV, pheno, threshold=0.95, filename) {
 
-    type_by_study <- table(pheno[ , c("Celltype", "Study_ID")])
+    pheno$StudyID_CT <- paste(pheno$Study_ID, pheno$Celltype, sep = "+")
+    type_by_study <- table(pheno[,"StudyID_CT"])
     m <- match(rownames(cell_NV), rownames(type_by_study))
     f_a <- !is.na(m)
     f_b <- m[f_a]
     cell_NV <- cell_NV[f_a,f_a]
-    type_by_study <- type_by_study[f_b,]
+    type_by_study <- type_by_study[f_b]
 
     # remove within-dataset scores
-    for(i in 1:dim(type_by_study)[2]){
-        filt <- type_by_study[,i] != 0
+    for(i in unique(pheno$Study_ID)){
+        filt <- grepl(i, row.names(type_by_study != 0))
         cell_NV[filt,filt] <- 0
     }
 
