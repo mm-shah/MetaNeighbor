@@ -77,14 +77,14 @@ run_MetaNeighbor_US <- function(vargenes, data, pheno){
         matches <- match(pheno2$StudyID_CT, colnames(cell_labels)[i])
         filter[!is.na(matches),1:length(celltypes)] <- 1
 
-        negatives = which(filter == 0, arr.ind = T)
-        positives = which(filter == 1, arr.ind = T)
+        negatives = which(filter == 0, arr.ind = TRUE)
+        positives = which(filter == 1, arr.ind = TRUE)
 
         predicts_temp[negatives] <- 0
 
-        np <- colSums(filter, na.rm=T)
-        nn <- apply(filter, MARGIN = 2, FUN = function(x) sum(x==0,na.rm=T))
-        p  <- apply(predicts_temp, MARGIN = 2, FUN = sum, na.rm=T)
+        np <- colSums(filter, na.rm = TRUE)
+        nn <- apply(filter, MARGIN = 2, FUN = function(x) sum(x==0,na.rm=TRUE))
+        p  <- apply(predicts_temp, MARGIN = 2, FUN = sum, na.rm = TRUE)
 
         cell_NV[i,]= (p/np - (np+1)/2)/nn
     }
