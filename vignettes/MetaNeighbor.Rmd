@@ -159,7 +159,8 @@ and example data [here](https://github.com/mm-shah/MetaNeighbor) and load them
 into your R session:
 
 ``` r
-data(MetaNeighbor_sample_data.RData)
+library("MetaNeighbor")
+data(MetaNeighbor_sample_data)
 AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
                          experiment_labels = MetaNeighbor_sample_data$exp.lab,
                          celltype_labels = MetaNeighbor_sample_data$cell.lab,
@@ -191,8 +192,8 @@ from our [Github site](https://github.com/mm-shah/MetaNeighbor) and load them
 into your R session:
 
 ``` r
-source("./R/run_MetaNeighbor.R")
-load("./data/MetaNeighbor_sample_data.RData")
+library("MetaNeighbor")
+data(MetaNeighbor_sample_data)
 ```
 
 ### Run MetaNeighbor
@@ -251,13 +252,12 @@ install.packages("gplots",repos='http://cran.us.r-project.org')
 install.packages("RColorBrewer",repos='http://cran.us.r-project.org')
 library(gplots)
 library(RColorBrewer)
-source("./R/run_MetaNeighbor_US.R")
-load("./data/MetaNeighbor_US_data.RData")
+library("MetaNeighbor")
+data(MetaNeighbor_US_data)
 var_genes = get_variable_genes(MetaNeighbor_US_data$data,
                                MetaNeighbor_US_data$pheno)
 celltype_NV = run_MetaNeighbor_US(var_genes,
                                   MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$celltypes,
                                   MetaNeighbor_US_data$pheno)
 get_top_hits(celltype_NV, 
              MetaNeighbor_US_data$pheno,
@@ -321,8 +321,8 @@ install.packages("RColorBrewer",repos='http://cran.us.r-project.org')
 ``` r
 library(gplots)
 library(RColorBrewer)
-source("./R/run_MetaNeighbor_US.R")
-load("./data/MetaNeighbor_US_data.RData")
+library(MetaNeighbor)
+data(MetaNeighbor_US_data)
 ```
 
 ### Identify a highly variable gene set
@@ -366,7 +366,6 @@ version of MetaNeighbor using the function:
 ``` r
 celltype_NV = run_MetaNeighbor_US(var_genes,
                                   MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$celltypes,
                                   MetaNeighbor_US_data$pheno)
 ```
 
