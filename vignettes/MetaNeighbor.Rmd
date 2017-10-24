@@ -1,8 +1,12 @@
 ---
-title: "MetaNeighbor"
+title: "MetaNeighbor : a method to rapidly assess cell type identity using both functional and random gene sets"
 author: "Megan Crow, Jesse Gillis"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  pdf_document:
+    number_sections: true
+    fig_caption: true
+    toc: true    
 bibliography: MetaNeighbor.bib
 graphics: yes
 vignette: >
@@ -12,45 +16,19 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-MetaNeighbor: a method to rapidly assess cell type identity using both functional and random gene sets
-================
-Megan Crow, Sara Ballouz, Jesse Gillis, Manthan Shah
-
-
--   [Introduction](#introduction)
--   [Data types](#data-types)
-    -   [Supervised](#supervised)
-    -   [Unsupervised](#unsupervised)
--   [System requirements/estimated run times](#system-requirementsestimated-run-times)
--   [Methods](#methods)
--   [Part 1: Supervised MetaNeighbor](#part-1-supervised-metaneighbor)
-    -   [Quick start](#quick-start)
-    -   [More detail](#more-detail)
-        -   [Install data and R functions](#install-data-and-r-functions)
-        -   [Run MetaNeighbor](#run-metaneighbor)
-        -   [Plot results](#plot-results)
--   [Part 2: Unsupervised MetaNeighbor](#part-2-unsupervised-metaneighbor)
-    -   [Quick start](#quick-start-1)
-    -   [More detail](#more-detail-1)
-        -   [Install data and R functions](#install-data-and-r-functions-1)
-        -   [Identify a high variance gene set](#identify-a-high-variance-gene-set)
-        -   [Run Unsupervised MetaNeighbor](#run-unsupervised-metaneighbor)
-        -   [Plot results](#plot-results-1)
-        -   [Identify reciprocal top hits and high scoring cell type pairs](#identify-reciprocal-top-hits-and-high-scoring-cell-type-pairs)
-
-Introduction
-============
-
+# Introduction
 The purpose of this method is to measure the similarity of cells across single
 cell RNA-sequencing (scRNA-seq) datasets by sampling from both random and
 functionally defined gene sets. MetaNeighbor works on the basis that cells of
 the same type should have more similar gene expression profiles than cells of
-different types. In other words, when we compare the expression profile between
-T-cells and hepatocytes for a given gene set, we should see higher correlations
-among all T-cells than we do between T-cells and hepatocytes. This is
-illustrated in the schematic below:
+different types. In other words, when we compare the expression profile between T-cells and hepatocytes for a given gene set, we should see higher correlations among all T-cells than we do between T-cells and hepatocytes. This is illustrated in the schematic below:
 
-![](coexp-schem.png)
+![Figure 1](./figures/coexp-schem.png)
+<figure align="center">
+<figcaption>
+Figure 1. A. Relation between Gene set and different cells B. Cell similarity between different cells
+</figcaption>
+</figure>
 
 In our approach, this is formalized through neighbor voting based on cell-cell similarities, which will be described in detail in the Methods section. In short
 , MetaNeighbor takes four inputs: a gene-by-sample expression matrix ("data"), a
@@ -70,12 +48,8 @@ to identify cell types across datasets when labels may be ambiguous or
 uninformative. We will walk through this unsupervised analysis in Part 2 of the
 vignette.
 
-Data types
-==========
-
-Supervised
-----------
-
+# Data types
+## Supervised
 MetaNeighbor requires four inputs:
 
 1.  A gene-by-sample expression matrix ("data")
@@ -93,9 +67,7 @@ found in the first output file
 3.  A matrix containing the means for each cell type across datasets can be
 found in the second output file
 
-Unsupervised
-------------
-
+## Unsupervised
 Unsupervised Metaneighbor requires four inputs:
 
 1.  A gene-by-sample expression matrix ("data")
@@ -112,9 +84,7 @@ gene names of the expression matrix, that gene sets contain more than one gene,
 and that the row names of the cell type label object match the column names of
 the expression matrix.
 
-System requirements/estimated run times
-=======================================
-
+# System requirements/estimated run times
 Because there is a ranking step, the code is not ideal for scaling in the R
 environment as is. The major factor is the total number of samples. Speed-ups
 are possible with parallelization and installing libraries such as MRAN (<https://mran.revolutionanalytics.com/>).
@@ -134,9 +104,7 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 |            2|          10|     1000|        100|       979|
 |            2|          10|    10000|         10|      3653|
 
-Methods
-=======
-
+# Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
 between all cells for a gene set. Next, the neighbor voting predictor produces a
 weighted matrix of predicted labels by performing matrix multiplication between
@@ -148,12 +116,8 @@ possible combinations of leave-one-dataset-out cross-validation, and we report
 how well we can recover cells of the same type as area under the receiver
 operator characteristic curve (AUROC). This is repeated for all folds of cross-validation, and the mean AUROC across folds is reported.
 
-Part 1: Supervised MetaNeighbor
-===============================
-
-Quick start
------------
-
+## Part 1: Supervised MetaNeighbor
+### Quick start
 To run through the analysis and plot results, simply download the R functions
 and example data [here](https://github.com/mm-shah/MetaNeighbor) and load them
 into your R session:
@@ -174,9 +138,7 @@ hist(AUROC_scores,
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 ```
 
-More detail
------------
-
+### More detail
 We have provided sample data, as well as sample gene sets on our [Github site](https://github.com/mm-shah/MetaNeighbor/tree/master/data). In this sample
 data, we have included the cortical interneurons from two public datasets,
 GSE60361 and GSE71585 (RPKM). A subset of ~3000 genes and 10 genesets have been
@@ -185,7 +147,7 @@ identify the Sst and Nos expressing subtypes, Sst-Chodl from GSE71585 and Int1
 from GSE60361, relative to all other interneurons within their respective
 experiments.
 
-### Install data and R functions
+#### Install data and R functions
 
 To run through the analysis, first download the R functions and example data
 from our [Github site](https://github.com/mm-shah/MetaNeighbor) and load them
@@ -196,8 +158,7 @@ library("MetaNeighbor")
 data(MetaNeighbor_sample_data)
 ```
 
-### Run MetaNeighbor
-
+#### Run MetaNeighbor
 MetaNeighbor has three outputs, two of which will be written out to external
 files. Specify the desired path and file name using the file\_ext variable (e.g. "filename")
 
@@ -219,8 +180,7 @@ head(AUROC_scores)
     ## GO:0016853 GO:0005615 GO:0005768 GO:0007067 GO:0065003 GO:0042592 
     ##  0.6784072  0.9631236  0.8152228  0.5834635  0.8393333  0.8892412
 
-### Plot results
-
+#### Plot results
 We can plot the distribution of AUROC scores using the histogram function, indicating the mean with a red line.
 
 ``` r
@@ -232,17 +192,18 @@ hist(AUROC_scores,
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 ```
 
-![](unnamed-chunk-4-1.png)
+![Figure 2](./figures/unnamed-chunk-4-1.png)
+<figure align="center">
+<figcaption>
+Figure 2. AUROC scores vs. Frequency Histogram for Sst Chodl
+</figcaption>
+</figure>
 
 AUROC scores greater than 0.5 indicate improvement over randomly guessing the
 identity of the cell type of interest.
 
-Part 2: Unsupervised MetaNeighbor
-=================================
-
-Quick start
------------
-
+## Part 2: Unsupervised MetaNeighbor
+### Quick start
 To run through the analysis and plot results, simply download the R functions
 and example data from our [Github site](https://github.com/mm-shah/MetaNeighbor)
 and load them into your R session:
@@ -265,9 +226,7 @@ get_top_hits(celltype_NV,
              filename="filename.txt")
 ```
 
-More detail
------------
-
+### More detail
 While ideally we would like to perform supervised analyses to investigate cell
 type identity, in some cases it is difficult to know how cell type labels
 compare across datasets. For this situation, we came up with a heuristic to
@@ -296,8 +255,7 @@ wholly different cell types (e.g., comparing brain to pancreas will likely yield
 some spurious overlaps), or when datasets are very unbalanced with respect to
 one another.
 
-### Install data and R functions
-
+#### Install data and R functions
 We have provided sample data and source code [here](https://github.com/mm-shah/MetaNeighbor). To begin the analysis, simply
 download the data files and functions, then upload them into your R session.
 You will also need to install two helper packages, gplots and RColorBrewer.
@@ -325,8 +283,7 @@ library(MetaNeighbor)
 data(MetaNeighbor_US_data)
 ```
 
-### Identify a highly variable gene set
-
+#### Identify a highly variable gene set
 To begin, we will use the function get\_variable\_genes, which picks the top
 quartile of variable genes across all but the top decile of expression bins for
 each dataset, then provides the intersect across datasets as the output.
@@ -358,8 +315,7 @@ number of datasets (2-3), this may indicate that the datasets have different
 cell type  compositions, or have very different gene coverage. Under these
 circumstances, we do not recommend the use of unsupervised MetaNeighbor. 
 
-### Run Unsupervised MetaNeighbor
-
+#### Run Unsupervised MetaNeighbor
 Once we have a set of highly variable genes, we can simply run an unsupervised
 version of MetaNeighbor using the function:
 
@@ -369,8 +325,7 @@ celltype_NV = run_MetaNeighbor_US(var_genes,
                                   MetaNeighbor_US_data$pheno)
 ```
 
-### Plot results
-
+#### Plot results
 Results can be plotted as follows:
 
 ``` r
@@ -385,7 +340,12 @@ heatmap.2(celltype_NV,
           cexCol = 0.6)
 ```
 
-![](unnamed-chunk-9-1.png)
+![Figure 3](./figures/unnamed-chunk-9-1.png)
+<figure align="center">
+<figcaption>
+Figure 3. AUROC scores' heatmap between testing and training pair
+</figcaption>
+</figure>
 
 This plot shows the AUROC scores between each testing and training pair. Red
 indicates a higher score and blue indicates a lower score. Note that the 
@@ -396,8 +356,7 @@ will affect scores as predictions are standardized by this factor.
 Within-dataset scores are shown for visualization purposes only, and should not
 be used for replicability inference.
 
-### Identify reciprocal top hits and high scoring cell type pairs
-
+#### Identify reciprocal top hits and high scoring cell type pairs
 To find reciprocal top hits and those with AUROC&gt;0.9 we use the following code:
 
 ``` r
