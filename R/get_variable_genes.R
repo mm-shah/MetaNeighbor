@@ -11,7 +11,7 @@
 #' every experiment (intersect)
 #'
 #' @examples
-#' data(MetaNeighbor_US_data.RData)
+#' data(MetaNeighbor_US_data)
 #' var_genes = get_variable_genes(MetaNeighbor_US_data$data,
 #'                                MetaNeighbor_US_data$pheno)
 #' var_genes

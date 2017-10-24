@@ -31,7 +31,7 @@
 #'     cross-validaiton can be found in the second output file.
 #'
 #' @examples
-#' data(MetaNeighbor_sample_data.RData)
+#' data(MetaNeighbor_sample_data)
 #' AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
 #'                                 experiment_labels = MetaNeighbor_sample_data$exp.lab,
 #'                                 celltype_labels = MetaNeighbor_sample_data$cell.lab,
