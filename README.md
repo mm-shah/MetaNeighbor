@@ -352,7 +352,6 @@ version of MetaNeighbor using the function:
 ``` r
 celltype_NV = run_MetaNeighbor_US(var_genes,
                                   MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$celltypes,
                                   MetaNeighbor_US_data$pheno)
 ```
 
