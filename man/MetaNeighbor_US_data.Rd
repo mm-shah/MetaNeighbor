@@ -6,12 +6,10 @@
 \title{MetaNeighbor_US_data}
 \format{\describe{
   \item{data}{A gene-by-sample expression matrix consisting of 3157 rows
-  (genes) and 1051 columns (cell types)}
-  \item{pheno}{A sample metadata table consisting 1051 entries, that lists
-  the Study_ID and Cell-type for each sample}
-  \item{celltypes}{A vector of length 39 that lists the names of all cell
-  types}
-  }}
+  (genes) and 1051 columns (samples)}
+  \item{pheno}{A sample metadata table (1051x2), that lists the dataset and
+  cell type for each sample with column names: Study_ID and Celltype}
+}}
 \source{
 Dataset:\url{https://github.com/mm-shah/MetaNeighbor/tree/master/data}
 }
@@ -19,7 +17,7 @@ Dataset:\url{https://github.com/mm-shah/MetaNeighbor/tree/master/data}
 MetaNeighbor_US_data
 }
 \description{
-A dataset containing a collection of following: a gene matrix,
+A list containing a collection of following: a gene matrix,
 cell type labels, experiment labels and sets of genes.
 }
 \keyword{datasets}

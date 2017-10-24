@@ -45,7 +45,7 @@ mean AUROC across folds is reported. Calls
 \code{\link{neighbor_voting_LeaveOneExpOut}}.
 }
 \examples{
-data(MetaNeighbor_sample_data.RData)
+data(MetaNeighbor_sample_data)
 AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
                                 experiment_labels = MetaNeighbor_sample_data$exp.lab,
                                 celltype_labels = MetaNeighbor_sample_data$cell.lab,

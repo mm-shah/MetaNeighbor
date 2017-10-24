@@ -4,37 +4,33 @@
 \alias{run_MetaNeighbor_US}
 \title{Runs unsupervised version of MetaNeighbor}
 \usage{
-run_MetaNeighbor_US(vargenes, data, celltypes, pheno)
+run_MetaNeighbor_US(vargenes, data, pheno)
 }
 \arguments{
 \item{vargenes}{A vector of high variance genes.}
 
 \item{data}{A gene-by-sample expression matrix.}
 
-\item{celltypes}{A vector that lists the names of all cell types.}
-
 \item{pheno}{A sample metadata table, that lists the dataset and cell type
 for each sample with column names: Study_ID and Celltype.}
 }
 \value{
-The output is a cell type-by-cell type mean AUROC matrix, which is
-built by treating each pair of cell types as testing and training data for
-MetaNeighbor, then taking the average AUROC for each pair (NB scores will not
-be identical because each test cell type is scored out of its own dataset,
-and the differential heterogeneity of datasets will influence scores).
+The output is a cell type-by-cell type mean AUROC matrix, which is built by
+treating each pair of cell types as testing and training data for MetaNeighbor, then
+taking the average AUROC for each pair (NB scores will not be identical because each
+test cell type is scored out of its own dataset, and the differential heterogeneity
+of datasets will influence scores).
 }
 \description{
-When it is difficult to know how cell type labels compare across datasets
-this function helps users to make an educated guess about the overlaps
-without requiring in-depth knowledge of marker genes
+When it is difficult to know how cell type labels compare across datasets this
+function helps users to make an educated guess about the overlaps without
+requiring in-depth knowledge of marker genes
 }
 \examples{
-data(MetaNeighbor_US_data.RData)
-var_genes = get_variable_genes(MetaNeighbor_US_data$data,
-                               MetaNeighbor_US_data$pheno)
+data(MetaNeighbor_US_data)
+var_genes = get_variable_genes(MetaNeighbor_US_data$data, MetaNeighbor_US_data$pheno)
 celltype_NV = run_MetaNeighbor_US(var_genes,
                                   MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$celltypes,
                                   MetaNeighbor_US_data$pheno)
 celltype_NV
 

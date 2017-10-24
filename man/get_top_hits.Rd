@@ -26,12 +26,11 @@ or equal to threshold value
 Identifies reciprocal top hits and high scoring cell type pairs
 }
 \examples{
-data(MetaNeighbor_US_data.RData)
+data(MetaNeighbor_US_data)
 var_genes = get_variable_genes(MetaNeighbor_US_data$data,
                                MetaNeighbor_US_data$pheno)
 celltype_NV = run_MetaNeighbor_US(var_genes,
                                   MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$celltypes,
                                   MetaNeighbor_US_data$pheno)
 top_hits = get_top_hits(celltype_NV,
                         MetaNeighbor_US_data$pheno,
