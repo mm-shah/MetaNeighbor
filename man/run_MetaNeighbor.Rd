@@ -54,7 +54,7 @@ AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
 hist(AUROC_scores,
      main = "Sst Nos",
      xlab = "AUROC Scores",
-     breaks = 20,
+     breaks = 10,
      xlim = c(0,1))
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 
