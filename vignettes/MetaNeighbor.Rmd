@@ -367,7 +367,6 @@ top_hits = get_top_hits (celltype_NV,
 top_hits
 ```
 
-   
     ##             Celltype_1           Celltype_2 Mean_AUROC         Match_type
     ## 1        GSE60361+Int1   GSE71585+Sst_Chodl       0.99 Reciprocal_top_hit
     ## 2        GSE60361+Int7    GSE71585+Vip_Sncg       0.97 Reciprocal_top_hit
