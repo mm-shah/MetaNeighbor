@@ -153,9 +153,9 @@ AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
                          genesets = MetaNeighbor_sample_data$genesets,
                          file_ext = "filename")
 hist(AUROC_scores,
-      main = "Sst Nos",
+      main = "Sst Chodl",
       xlab = "AUROC Scores",
-      breaks = 20,
+      breaks = 10,
       xlim = c(0,1))
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 ```
@@ -211,9 +211,9 @@ We can plot the distribution of AUROC scores using the histogram function, indic
 
 ``` r
 hist(AUROC_scores,
-      main = "Sst Nos",
+      main = "Sst Chodl",
       xlab = "AUROC Scores",
-      breaks = 20,
+      breaks = 10,
       xlim = c(0,1))
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 ```
