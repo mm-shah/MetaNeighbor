@@ -5,9 +5,9 @@ author: "Megan Crow, Jesse Gillis"
 date: '`r Sys.Date()`'
 output:
   pdf_document:
-    number_sections: yes
-    fig_caption: yes
-    toc: yes
+    number_sections: true
+    fig_caption: true
+    toc: true
 bibliography: MetaNeighbor.bib
 graphics: yes
 vignette: >
