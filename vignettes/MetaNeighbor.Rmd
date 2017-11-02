@@ -367,22 +367,23 @@ top_hits = get_top_hits (celltype_NV,
 top_hits
 ```
 
-    ##    Celltype_1  Celltype_2 Mean_AUROC         Match_type
-    ## 1        Int1   Sst_Chodl       0.99 Reciprocal_top_hit
-    ## 2        Int7    Vip_Sncg       0.97 Reciprocal_top_hit
-    ## 3       Int14       Smad3       0.97 Reciprocal_top_hit
-    ## 4        Int5        Sncg       0.96 Reciprocal_top_hit
-    ## 5       Int10   Vip_Parm1       0.95 Reciprocal_top_hit
-    ## 6        Int2   Sst_Cbln4       0.95 Reciprocal_top_hit
-    ## 7       Int15   Ndnf_Car4       0.94 Reciprocal_top_hit
-    ## 8       Int10  Vip_Mybpc1       0.93          Above_0.9
-    ## 9       Int14        Igtp       0.92          Above_0.9
-    ## 10       Sncg        Int6       0.92          Above_0.9
-    ## 11  Ndnf_Car4       Int16       0.92          Above_0.9
-    ## 12      Int12 Ndnf_Cxcl14       0.91 Reciprocal_top_hit
-    ## 13 Vip_Mybpc1        Int9       0.91          Above_0.9
-    ## 14   Vip_Sncg        Int8       0.91          Above_0.9
-    ## 15       Int3 Pvalb_Obox3       0.81 Reciprocal_top_hit
+   
+    ##             Celltype_1           Celltype_2 Mean_AUROC         Match_type
+    ## 1        GSE60361+Int1   GSE71585+Sst_Chodl       0.99 Reciprocal_top_hit
+    ## 2        GSE60361+Int7    GSE71585+Vip_Sncg       0.97 Reciprocal_top_hit
+    ## 3       GSE60361+Int14       GSE71585+Smad3       0.97 Reciprocal_top_hit
+    ## 4        GSE60361+Int5        GSE71585+Sncg       0.96 Reciprocal_top_hit
+    ## 5       GSE60361+Int10   GSE71585+Vip_Parm1       0.95 Reciprocal_top_hit
+    ## 6        GSE60361+Int2   GSE71585+Sst_Cbln4       0.95 Reciprocal_top_hit
+    ## 7       GSE60361+Int15   GSE71585+Ndnf_Car4       0.94 Reciprocal_top_hit
+    ## 8       GSE60361+Int10  GSE71585+Vip_Mybpc1       0.93          Above_0.9
+    ## 9       GSE60361+Int14        GSE71585+Igtp       0.92          Above_0.9
+    ## 10       GSE71585+Sncg        GSE60361+Int6       0.92          Above_0.9
+    ## 11  GSE71585+Ndnf_Car4       GSE60361+Int16       0.92          Above_0.9
+    ## 12      GSE60361+Int12 GSE71585+Ndnf_Cxcl14       0.91 Reciprocal_top_hit
+    ## 13 GSE71585+Vip_Mybpc1        GSE60361+Int9       0.91          Above_0.9
+    ## 14   GSE71585+Vip_Sncg        GSE60361+Int8       0.91          Above_0.9
+    ## 15       GSE60361+Int3 GSE71585+Pvalb_Obox3       0.81 Reciprocal_top_hit
 
 These top hits can then be used for supervised analysis, making putative cell
 type labels for each unique grouping (see Part 1).
