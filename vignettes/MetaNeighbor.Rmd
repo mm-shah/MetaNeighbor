@@ -1,16 +1,17 @@
 ---
-title: "MetaNeighbor : a method to rapidly assess cell type identity using both functional and random gene sets"
+title: "MetaNeighbor : a method to rapidly assess cell type identity using both functional
+  and random gene sets"
 author: "Megan Crow, Jesse Gillis"
-date: "`r Sys.Date()`"
-output: 
+date: '`r Sys.Date()`'
+output:
   pdf_document:
-    number_sections: true
-    fig_caption: true
-    toc: true    
+    number_sections: yes
+    fig_caption: yes
+    toc: yes
 bibliography: MetaNeighbor.bib
 graphics: yes
 vignette: >
-  %\VignetteIndexEntry{MetaNeighbor user guide}
+  %\VignetteIndexEntry{"MetaNeighbor user guide"}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignettePackage{MetaNeighbor}
   %\VignetteEncoding{UTF-8}
