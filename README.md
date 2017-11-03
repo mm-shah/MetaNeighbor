@@ -1,6 +1,6 @@
 MetaNeighbor: a method to rapidly assess cell type identity using both functional and random gene sets
 ================
-Megan Crow, Sara Ballouz, Jesse Gillis, Manthan Shah
+Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
 
 
 -   [Introduction](#introduction)
