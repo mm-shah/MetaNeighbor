@@ -1,6 +1,6 @@
 ---
 title: "MetaNeighbor : a method to rapidly assess cell type identity using both functional and random gene sets"
-author: "Megan Crow, Jesse Gillis"
+author: "Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis"
 date: '`r Sys.Date()`'
 output:
   pdf_document:
