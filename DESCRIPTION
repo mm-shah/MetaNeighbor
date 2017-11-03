@@ -4,9 +4,9 @@ Title: Method to rapidly assess cell type identity using gene sets
 Version: 0.99.0
 Author@R: c(
     person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
-    person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")),
     person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb")),
-    person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb")))
+    person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb")),
+    person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")))
 Author: c(
     person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
     person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")))
