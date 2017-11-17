@@ -15,11 +15,8 @@
 #' mean AUROC across folds is reported. Calls
 #' \code{\link{neighbor_voting_LeaveOneExpOut}}.
 #'
-#' @param data A gene-by-sample expression matrix.
-#' @param experiment_labels A numerical vector that indicates the source of each
-#' sample.
-#' @param celltype_labels A matrix that indicates the cell type of each sample.
-#' @param genesets Gene sets of interest provided as a list of vectors.
+#' @param mn_data A SummarizedExperiment object containing gene-by-sample
+#' expression matrix. 
 #' @param file_ext Specify the desired path and file name for output file.
 #' @return There are three outputs of the method:
 #'      i.) A vector of AUROC scores representing the mean for each gene set
@@ -30,13 +27,10 @@
 #'     iii.) A matrix containing the means for each cell type across folds of
 #'     cross-validaiton can be found in the second output file.
 #'
+#' @seealso \code{\link{neighbor_voting_LeaveOneExpOut}}
 #' @examples
-#' data(MetaNeighbor_sample_data)
-#' AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
-#'                                 experiment_labels = MetaNeighbor_sample_data$exp.lab,
-#'                                 celltype_labels = MetaNeighbor_sample_data$cell.lab,
-#'                                 genesets = MetaNeighbor_sample_data$genesets,
-#'                                 file_ext = "filename")
+#' data(mn_data)
+#' AUROC_scores = run_MetaNeighbor(mn_data, file_ext = "filename")
 #' hist(AUROC_scores,
 #'      main = "Sst Chodl",
 #'      xlab = "AUROC Scores",
@@ -47,12 +41,13 @@
 #' @export
 #'
 
-run_MetaNeighbor <-function(data,
-                            experiment_labels,
-                            celltype_labels,
-                            genesets,
-                            file_ext) {
-
+run_MetaNeighbor <-function(mn_data, file_ext) {
+    eval_obj(mn_data)
+    data                <- SummarizedExperiment::assays(mn_data)[[1]]
+    experiment_labels   <- as.numeric(factor(mn_data$study_id))
+    celltype_labels     <- matrix(mn_data@colData@metadata[[1]])
+    genesets            <- mn_data@metadata[[1]]
+    
     ROCs              <- vector(mode = "list", length = length(genesets))
     names(ROCs)       <- names(genesets)
     nv_mat            <- matrix(data = 0,

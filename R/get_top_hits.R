@@ -4,8 +4,8 @@
 #'
 #' @param cell_NV A matrix of celltype-to-celltype AUROC scores
 #' (output from \code{\link{run_MetaNeighbor_US}})
-#' @param pheno A sample metadata table, that lists the dataset and cell type
-#' for each sample with column names "Study_ID" and "Celltype".
+#' @param mn_data A SummarizedExperiment object containing gene-by-sample
+#' expression matrix.
 #' @param threshold Default value 0.95. Must be between [0-1]
 #' @param filename Set path and name of output file
 #'
@@ -14,14 +14,11 @@
 #' or equal to threshold value
 
 #' @examples
-#' data(MetaNeighbor_US_data)
-#' var_genes = get_variable_genes(MetaNeighbor_US_data$data,
-#'                                MetaNeighbor_US_data$pheno)
-#' celltype_NV = run_MetaNeighbor_US(var_genes,
-#'                                   MetaNeighbor_US_data$data,
-#'                                   MetaNeighbor_US_data$pheno)
+#' data(mn_data)
+#' var_genes = get_variable_genes(mn_data)
+#' celltype_NV = run_MetaNeighbor_US(var_genes, mn_data)
 #' top_hits = get_top_hits(celltype_NV,
-#'                         MetaNeighbor_US_data$pheno,
+#'                         mn_data,
 #'                         threshold=0.9,
 #'                         filename="filename.txt")
 #' top_hits
@@ -29,9 +26,10 @@
 #' @export
 #'
 
-get_top_hits <- function(cell_NV, pheno, threshold=0.95, filename) {
-
-    pheno$StudyID_CT <- paste(pheno$Study_ID, pheno$Celltype, sep = "+")
+get_top_hits <- function(cell_NV, mn_data, threshold=0.95, filename) {
+    eval_obj(mn_data)
+    pheno <- as.data.frame(mn_data@colData@listData[c("sample_id","study_id","cell_type")])
+    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "+")
     type_by_study <- table(pheno[,"StudyID_CT"])
     m <- match(rownames(cell_NV), rownames(type_by_study))
     f_a <- !is.na(m)

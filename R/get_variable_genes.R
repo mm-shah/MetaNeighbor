@@ -3,29 +3,29 @@
 #' Identifies genes with high variance compared to their median expression
 #' (top quartile) within each experimentCertain function
 #'
-#' @param data A gene-by-sample expression matrix.
-#' @param pheno A sample metadata table, that lists the dataset and cell type
-#' for each sample with column names "Study_ID" and "Celltype".
+#' @param mn_data A SummarizedExperiment object containing gene-by-sample
+#' expression matrix.
 #'
 #' @return The output is a vector of gene names that are highly variable in
 #' every experiment (intersect)
 #'
 #' @examples
-#' data(MetaNeighbor_US_data)
-#' var_genes = get_variable_genes(MetaNeighbor_US_data$data,
-#'                                MetaNeighbor_US_data$pheno)
+#' data(mn_data)
+#' var_genes = get_variable_genes(mn_data)
 #' var_genes
 #'
 #' @export
 #'
 
-get_variable_genes <- function(data, pheno) {
+get_variable_genes <- function(mn_data) {
+    eval_obj(mn_data)
+    data <- SummarizedExperiment::assays(mn_data)[[1]]
     var_genes1 <- vector("list")
-    experiment <- unique(pheno$Study_ID)
+    experiment <- unique(mn_data$study_id)
     j <- 1
 
     for(exp in experiment){
-        data_subset   <- data[ , pheno$Study_ID == exp]
+        data_subset   <- data[ , mn_data$study_id == exp]
         genes_list    <- vector("list")
         median_data   <- apply(data_subset, MARGIN = 1, FUN = stats::median)
         variance_data <- apply(data_subset, MARGIN = 1, FUN = stats::var)

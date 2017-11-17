@@ -5,10 +5,9 @@
 #' requiring in-depth knowledge of marker genes
 #'
 #' @param vargenes A vector of high variance genes.
-#' @param data A gene-by-sample expression matrix.
-#' @param pheno A sample metadata table, that lists the dataset and cell type
-#' for each sample with column names: Study_ID and Celltype.
-#'
+#' @param mn_data A SummarizedExperiment object containing gene-by-sample
+#' expression matrix.
+#' 
 #' @return The output is a cell type-by-cell type mean AUROC matrix, which is built by
 #' treating each pair of cell types as testing and training data for MetaNeighbor, then
 #' taking the average AUROC for each pair (NB scores will not be identical because each
@@ -16,20 +15,20 @@
 #' of datasets will influence scores).
 #'
 #' @examples
-#' data(MetaNeighbor_US_data)
-#' var_genes = get_variable_genes(MetaNeighbor_US_data$data, MetaNeighbor_US_data$pheno)
-#' celltype_NV = run_MetaNeighbor_US(var_genes,
-#'                                   MetaNeighbor_US_data$data,
-#'                                   MetaNeighbor_US_data$pheno)
+#' data(mn_data)
+#' var_genes = get_variable_genes(mn_data)
+#' celltype_NV = run_MetaNeighbor_US(var_genes, mn_data)
 #' celltype_NV
 #'
 #' @export
 #'
 
-run_MetaNeighbor_US <- function(vargenes, data, pheno){
-
-    pheno$StudyID_CT <- paste(pheno$Study_ID, pheno$Celltype, sep = "+")
-    celltypes <- unique(pheno$StudyID_CT)
+run_MetaNeighbor_US <- function(vargenes, mn_data){
+    eval_obj(mn_data)
+    data        <- SummarizedExperiment::assays(mn_data)[[1]]
+    pheno       <- as.data.frame(mn_data@colData@listData[c("sample_id","study_id","cell_type")])
+    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "+")
+    celltypes   <- unique(pheno$StudyID_CT)
     cell_labels <- matrix(0, ncol=length(celltypes), nrow=dim(pheno)[1])
     rownames(cell_labels) <-colnames(data)
     colnames(cell_labels) <- celltypes
@@ -66,8 +65,8 @@ run_MetaNeighbor_US <- function(vargenes, data, pheno){
         predicts_temp <- predicts
 
         matching_celltype <- match(pheno$StudyID_CT, colnames(cell_labels)[i])
-        unique_studyID    <- unique(pheno[!is.na(matching_celltype), "Study_ID"])
-        matching_studyID  <- match(pheno$Study_ID, unique_studyID)
+        unique_studyID    <- unique(pheno[!is.na(matching_celltype), "study_id"])
+        matching_studyID  <- match(pheno$study_id, unique_studyID)
         pheno2            <- pheno[!is.na(matching_studyID),]
         predicts_temp     <- predicts_temp[!is.na(matching_studyID),]
         predicts_temp     <- apply(abs(predicts_temp), MARGIN = 2, FUN = rank, na.last= "keep", ties.method="average")
