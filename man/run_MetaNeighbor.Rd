@@ -4,17 +4,11 @@
 \alias{run_MetaNeighbor}
 \title{Runs MetaNeighbor}
 \usage{
-run_MetaNeighbor(data, experiment_labels, celltype_labels, genesets, file_ext)
+run_MetaNeighbor(mn_data, file_ext)
 }
 \arguments{
-\item{data}{A gene-by-sample expression matrix.}
-
-\item{experiment_labels}{A numerical vector that indicates the source of each
-sample.}
-
-\item{celltype_labels}{A matrix that indicates the cell type of each sample.}
-
-\item{genesets}{Gene sets of interest provided as a list of vectors.}
+\item{mn_data}{A SummarizedExperiment object containing gene-by-sample
+expression matrix.}
 
 \item{file_ext}{Specify the desired path and file name for output file.}
 }
@@ -45,12 +39,8 @@ mean AUROC across folds is reported. Calls
 \code{\link{neighbor_voting_LeaveOneExpOut}}.
 }
 \examples{
-data(MetaNeighbor_sample_data)
-AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
-                                experiment_labels = MetaNeighbor_sample_data$exp.lab,
-                                celltype_labels = MetaNeighbor_sample_data$cell.lab,
-                                genesets = MetaNeighbor_sample_data$genesets,
-                                file_ext = "filename")
+data(mn_data)
+AUROC_scores = run_MetaNeighbor(mn_data, file_ext = "filename")
 hist(AUROC_scores,
      main = "Sst Chodl",
      xlab = "AUROC Scores",
@@ -58,4 +48,7 @@ hist(AUROC_scores,
      xlim = c(0,1))
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 
+}
+\seealso{
+\code{\link{neighbor_voting_LeaveOneExpOut}}
 }

@@ -4,14 +4,14 @@
 \alias{get_top_hits}
 \title{Find reciprocal top hits}
 \usage{
-get_top_hits(cell_NV, pheno, threshold = 0.95, filename)
+get_top_hits(cell_NV, mn_data, threshold = 0.95, filename)
 }
 \arguments{
 \item{cell_NV}{A matrix of celltype-to-celltype AUROC scores
 (output from \code{\link{run_MetaNeighbor_US}})}
 
-\item{pheno}{A sample metadata table, that lists the dataset and cell type
-for each sample with column names "Study_ID" and "Celltype".}
+\item{mn_data}{A SummarizedExperiment object containing gene-by-sample
+expression matrix.}
 
 \item{threshold}{Default value 0.95. Must be between [0-1]}
 
@@ -26,14 +26,11 @@ or equal to threshold value
 Identifies reciprocal top hits and high scoring cell type pairs
 }
 \examples{
-data(MetaNeighbor_US_data)
-var_genes = get_variable_genes(MetaNeighbor_US_data$data,
-                               MetaNeighbor_US_data$pheno)
-celltype_NV = run_MetaNeighbor_US(var_genes,
-                                  MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$pheno)
+data(mn_data)
+var_genes = get_variable_genes(mn_data)
+celltype_NV = run_MetaNeighbor_US(var_genes, mn_data)
 top_hits = get_top_hits(celltype_NV,
-                        MetaNeighbor_US_data$pheno,
+                        mn_data,
                         threshold=0.9,
                         filename="filename.txt")
 top_hits

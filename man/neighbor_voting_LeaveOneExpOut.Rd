@@ -31,12 +31,10 @@ association' using cross validation. Performance is evaluated by calculating
 the AUROC for each cell type.
 }
 \examples{
-data(MetaNeighbor_sample_data)
-AUROC_scores = run_MetaNeighbor(data = MetaNeighbor_sample_data$data,
-                                experiment_labels = MetaNeighbor_sample_data$exp.lab,
-                                celltype_labels = MetaNeighbor_sample_data$cell.lab,
-                                genesets = MetaNeighbor_sample_data$genesets,
-                                file_ext = "filename")
+data(mn_data)
+AUROC_scores = run_MetaNeighbor(mn_data, file_ext = "filename")
 AUROC_scores
-
+}
+\seealso{
+\code{\link{run_MetaNeighbor}}
 }
