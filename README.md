@@ -81,7 +81,7 @@ metadata section
 metadata of colData in the SEO. This should be a binary (0,1) matrix where 1 
 indicates cell type membership and 0 indicates non-membership
 
-``` {r eval = FALSE}
+``` r
 library(SummarizedExperiment)
 exp_mat <- gene_by_sample_matrix
 genesets <- list_of_gene_sets
@@ -423,4 +423,4 @@ type labels for each unique grouping (see Part 1).
 
 For any assistance reproducing analyses please contact mcrow@cshl.edu or
 jgillis@cshl.edu
- 
+
