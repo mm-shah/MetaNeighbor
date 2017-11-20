@@ -1,7 +1,7 @@
 Package: MetaNeighbor
 Type: Package
 Title: Method to rapidly assess cell type identity using gene sets
-Version: 0.99.1
+Version: 0.99.2
 Author@R: c(
     person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
     person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb")),
@@ -21,7 +21,7 @@ Description: MetaNeighbor is a replication framework, that allows researchers to
     based on the similarity to the training data.
 biocViews: GeneExpression, MultipleComparison, SingleCell, Transcriptomics
 License: MIT + file LICENSE
-Depends: R(>= 3.4)
+Depends: R(>= 3.5)
 Imports: stats (>= 3.4), SummarizedExperiment (>= 1.6.5), utils (>= 3.4)
 Suggests: knitr (>= 1.17), rmarkdown (>= 1.6), testthat (>= 1.0.2)
 LazyData: true
