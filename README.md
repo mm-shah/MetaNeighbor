@@ -34,7 +34,7 @@ T cells and hepatocytes for a given gene set, we should see higher correlations
 among all T cells than we do between T cells and hepatocytes. This is 
 illustrated in the schematic below:
 
-![Figure 1](./figures/coexp-schem.png)
+![Figure 1](./vignettes/figures/coexp-schem.png)
 <figure align="center">
 <figcaption>
 Figure 1. A. Relationship between gene set expression and cell type B. Cell similarity within and across cell types
@@ -224,7 +224,7 @@ hist(AUROC_scores,
 abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
 ```
 
-![Figure 2](./figures/unnamed-chunk-4-1.png)
+![Figure 2](./vignettes/figures/unnamed-chunk-4-1.png)
 <figure align="center">
 <figcaption>
 Figure 2. Histogram of AUROC scores for Sst Chodl
@@ -373,7 +373,7 @@ heatmap.2(celltype_NV,
           cexCol = 0.6)
 ```
 
-![Figure 3](./figures/unnamed-chunk-9-1.png)
+![Figure 3](./vignettes/figures/unnamed-chunk-9-1.png)
 <figure align="center">
 <figcaption>
 Figure 3. Heatmap of mean AUROC scores between all pairs of cell types
