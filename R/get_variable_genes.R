@@ -38,17 +38,17 @@ get_variable_genes <- function(mn_data) {
 
         for(i in 1:length(quant_med)){
             if(i == 1){
-            filt1     <- median_data <= quant_med[i]
-            var_temp  <- variance_data[filt1]
-            quant_var <- stats::quantile(var_temp, na.rm = TRUE)
-            filt2     <- var_temp > quant_var[4]
-            genes_list[[i]] <- names(var_temp)[filt2]
+                filt1     <- median_data <= quant_med[i]
+                var_temp  <- variance_data[filt1]
+                quant_var <- stats::quantile(var_temp, na.rm = TRUE)
+                filt2     <- var_temp > quant_var[4]
+                genes_list[[i]] <- names(var_temp)[filt2]
             } else {
-            filt1     <- median_data <= quant_med[i] & median_data > quant_med[i-1]
-            var_temp  <- variance_data[filt1]
-            quant_var <- stats::quantile(var_temp, na.rm = TRUE)
-            filt2     <- var_temp > quant_var[4]
-            genes_list[[i]] <- names(var_temp)[filt2]
+                filt1     <- median_data <= quant_med[i] & median_data > quant_med[i-1]
+                var_temp  <- variance_data[filt1]
+                quant_var <- stats::quantile(var_temp, na.rm = TRUE)
+                filt2     <- var_temp > quant_var[4]
+                genes_list[[i]] <- names(var_temp)[filt2]
             }
         }
 

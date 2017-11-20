@@ -28,8 +28,11 @@
 
 get_top_hits <- function(cell_NV, mn_data, threshold=0.95, filename) {
     eval_obj(mn_data)
-    pheno <- as.data.frame(mn_data@colData@listData[c("sample_id","study_id","cell_type")])
-    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "+")
+    
+    pheno <- as.data.frame(mn_data@colData@listData[c("sample_id","study_id","cell_type")], 
+                           stringsAsFactors = FALSE)
+    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "|")
+    
     type_by_study <- table(pheno[,"StudyID_CT"])
     m <- match(rownames(cell_NV), rownames(type_by_study))
     f_a <- !is.na(m)
@@ -38,7 +41,7 @@ get_top_hits <- function(cell_NV, mn_data, threshold=0.95, filename) {
     type_by_study <- type_by_study[f_b]
 
     # remove within-dataset scores
-    for(i in unique(pheno$Study_ID)){
+    for(i in unique(pheno$study_id)){
         filt <- grepl(i, row.names(type_by_study != 0))
         cell_NV[filt,filt] <- 0
     }
@@ -68,7 +71,7 @@ get_top_hits <- function(cell_NV, mn_data, threshold=0.95, filename) {
 
     #tidy results
     recip2  <- cbind(rownames(recip),recip[,1:3])
-    colnames(recip2) <- c("Celltype_1","Celltype_2","Mean_AUROC","Match_type")
+    colnames(recip2) <- c("study_id|Celltype_1","study_id|Celltype_2","Mean_AUROC","Match_type")
     rownames(recip2) <- NULL
 
     recip     <- recip2[order(recip2[,3],decreasing=TRUE),]

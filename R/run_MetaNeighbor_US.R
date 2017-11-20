@@ -27,7 +27,7 @@ run_MetaNeighbor_US <- function(vargenes, mn_data){
     eval_obj(mn_data)
     data        <- SummarizedExperiment::assays(mn_data)[[1]]
     pheno       <- as.data.frame(mn_data@colData@listData[c("sample_id","study_id","cell_type")])
-    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "+")
+    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "|")
     celltypes   <- unique(pheno$StudyID_CT)
     cell_labels <- matrix(0, ncol=length(celltypes), nrow=dim(pheno)[1])
     rownames(cell_labels) <-colnames(data)
