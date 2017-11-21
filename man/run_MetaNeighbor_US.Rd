@@ -4,15 +4,13 @@
 \alias{run_MetaNeighbor_US}
 \title{Runs unsupervised version of MetaNeighbor}
 \usage{
-run_MetaNeighbor_US(vargenes, data, pheno)
+run_MetaNeighbor_US(vargenes, mn_data)
 }
 \arguments{
 \item{vargenes}{A vector of high variance genes.}
 
-\item{data}{A gene-by-sample expression matrix.}
-
-\item{pheno}{A sample metadata table, that lists the dataset and cell type
-for each sample with column names: Study_ID and Celltype.}
+\item{mn_data}{A SummarizedExperiment object containing gene-by-sample
+expression matrix.}
 }
 \value{
 The output is a cell type-by-cell type mean AUROC matrix, which is built by
@@ -27,11 +25,9 @@ function helps users to make an educated guess about the overlaps without
 requiring in-depth knowledge of marker genes
 }
 \examples{
-data(MetaNeighbor_US_data)
-var_genes = get_variable_genes(MetaNeighbor_US_data$data, MetaNeighbor_US_data$pheno)
-celltype_NV = run_MetaNeighbor_US(var_genes,
-                                  MetaNeighbor_US_data$data,
-                                  MetaNeighbor_US_data$pheno)
+data(mn_data)
+var_genes = get_variable_genes(mn_data)
+celltype_NV = run_MetaNeighbor_US(var_genes, mn_data)
 celltype_NV
 
 }

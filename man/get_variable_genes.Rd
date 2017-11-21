@@ -4,13 +4,11 @@
 \alias{get_variable_genes}
 \title{Identify a highly variable gene set}
 \usage{
-get_variable_genes(data, pheno)
+get_variable_genes(mn_data)
 }
 \arguments{
-\item{data}{A gene-by-sample expression matrix.}
-
-\item{pheno}{A sample metadata table, that lists the dataset and cell type
-for each sample with column names "Study_ID" and "Celltype".}
+\item{mn_data}{A SummarizedExperiment object containing gene-by-sample
+expression matrix.}
 }
 \value{
 The output is a vector of gene names that are highly variable in
@@ -21,9 +19,8 @@ Identifies genes with high variance compared to their median expression
 (top quartile) within each experimentCertain function
 }
 \examples{
-data(MetaNeighbor_US_data)
-var_genes = get_variable_genes(MetaNeighbor_US_data$data,
-                               MetaNeighbor_US_data$pheno)
+data(mn_data)
+var_genes = get_variable_genes(mn_data)
 var_genes
 
 }
