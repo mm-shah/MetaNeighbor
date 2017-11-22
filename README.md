@@ -129,7 +129,8 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 
 # Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
-between all cells for a gene set. Next, the neighbor voting predictor produces a
+between all cells for a gene set. All values in the network are then re-ranked and standardized to lie between 0-1.
+Next, the neighbor voting predictor produces a
 weighted matrix of predicted labels by performing matrix multiplication between
 the network and the binary vector indicating cell type membership, then dividing
 each element by the null predictor (i.e., node degree). That is, each cell is
