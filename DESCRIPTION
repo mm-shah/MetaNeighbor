@@ -1,7 +1,7 @@
 Package: MetaNeighbor
 Type: Package
 Title: Method to rapidly assess cell type identity using gene sets
-Version: 0.99.2
+Version: 0.99.3
 Author@R: c(
     person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
     person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb")),
