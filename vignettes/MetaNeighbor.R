@@ -3,7 +3,7 @@ library("MetaNeighbor")
 data(mn_data)
 data(gene_set)
 
-## ----eval=TRUE,fig.width=4,fig.height=3.15-------------------------------
+## ----eval=TRUE,fig.width=4,fig.height=3----------------------------------
 AUROC_scores = MetaNeighbor(data = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,

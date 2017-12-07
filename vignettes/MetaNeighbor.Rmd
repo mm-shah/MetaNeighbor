@@ -173,7 +173,7 @@ evaluated. When all gene sets have been tested, MetaNeighbor will return a
 matrix of AUROC scores for each cell type. A smoothed distribution of scores for
 each cell type can automatically be plotted by setting bplot = TRUE.
 
-``` {r eval=TRUE,fig.width=4,fig.height=3.15}
+``` {r eval=TRUE,fig.width=4,fig.height=3}
 AUROC_scores = MetaNeighbor(data = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
