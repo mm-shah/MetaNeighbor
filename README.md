@@ -187,15 +187,38 @@ AUROC_scores = MetaNeighbor(data = mn_data,
                             celltype_labels = mn_data@colData@metadata$cell_labels,
                             genesets = gene_set,
                             bplot = TRUE)
+```
+
+    ## [1] "GO:0016853"
+    ## [1] "GO:0005615"
+    ## [1] "GO:0005768"
+    ## [1] "GO:0007067"
+    ## [1] "GO:0065003"
+    ## [1] "GO:0042592"
+    ## [1] "GO:0005929"
+    ## [1] "GO:0008565"
+    ## [1] "GO:0016829"
+    ## [1] "GO:0022857"
+
 ![Figure 2](./vignettes/figures/beanplot.png)
 <figure align="center">
 <figcaption>
 Figure 2. AUROC score distributions for each cell type
 </figcaption>
 </figure>
+
 ```{r eval= TRUE}
 head(AUROC_scores)
 ```
+
+    ##             SstChodl     Smad3
+    ## GO:0016853 0.6784072 0.6575645
+    ## GO:0005615 0.9631236 0.9491430
+    ## GO:0005768 0.8152228 0.8701731
+    ## GO:0007067 0.5834635 0.7234393
+    ## GO:0065003 0.8393333 0.9275032
+    ## GO:0042592 0.8892412 0.9546425
+    
 AUROC scores greater than 0.5 indicate improvement over randomly guessing the
 identity of the cell type of interest.
 
@@ -282,9 +305,15 @@ each dataset, then provides the intersect across datasets as the output.
 var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
 head(var_genes)
 ```
+
+    ## [1] "1110017D15Rik" "1190002N15Rik" "3110043O21Rik" "Aacs"
+    ## [5] "Abcb10"        "Abcb6"
+    
 ``` {r eval = TRUE}
 length(var_genes)
 ```
+
+    ## [1] 331
 
 In this case, we return a set of 331 highly variable genes. AUROC scores depend
 on both gene set size and variance. If the size of the returned set is small
