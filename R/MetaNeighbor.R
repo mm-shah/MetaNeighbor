@@ -100,9 +100,7 @@ MetaNeighbor <-function(data, i = 1, experiment_labels, celltype_labels, geneset
                            border="NA", 
                            col="gray", 
                            ylab="AUROC", 
-                           what=c(0,1,1,0), 
-                           cutmax=1,
-                           cutmin=0,
+                           what=c(0,1,1,1),
                            frame.plot = FALSE)
     }
     
