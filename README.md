@@ -34,12 +34,10 @@ T cells and hepatocytes for a given gene set, we should see higher correlations
 among all T cells than we do between T cells and hepatocytes. This is 
 illustrated in the schematic below:
 
-![Figure 1](./vignettes/figures/coexp-schem.png)
-<figure align="center">
-<figcaption>
-Figure 1. A. Relationship between gene set expression and cell type B. Cell similarity within and across cell types
-</figcaption>
-</figure>
+<p align="center">
+<img src="./vignettes/figures/coexp-schem.png"><br>
+<b>Figure 1. A. Relationship between gene set expression and cell type B. Cell similarity within and across cell types</b><br>
+</p>
 
 In our approach, this is formalized through neighbor voting based on cell-cell 
 similarities, which will be described in detail in the Methods section. In short
@@ -63,13 +61,12 @@ vignette.
 
 # Data type requiremnets
 
-For MetaNeighbor to run, the input data should be contained within a 
-SummarizedExperiment object (SEO) with the following format:
+For MetaNeighbor to run, the input data should be a SummarizedExperiment object 
+(SEO) with the following considerations:
 
-1.  The gene-by-sample matrix should be the 1st assay in the SEO
-2.  Gene sets of interest should be provided as a list of vectors in the SEO's
-metadata section
-3.  The colData of the SEO should contain the following vectors:
+1.  The gene-by-sample matrix should be an assay of SEO. 
+2.  Gene sets of interest should be provided as a list of vectors
+3.  Additional data should have following vectors:
     i)  sample_id : A character vector (length equal to the number of samples) 
     containing a unique identifier for each sample
     ii)  study_id : A character vector (length equal to the number of samples)
@@ -77,26 +74,9 @@ metadata section
     "GSE71585" = Tasic et al, as in mn_data)
     iii)  cell_type : A character vector (length equal to the number of samples)
     that indicates the cell type of each sample
-4.  cell_labels should be provided as a sample-by-cell label matrix in the 
-metadata of colData in the SEO. This should be a binary (0,1) matrix where 1 
-indicates cell type membership and 0 indicates non-membership
-
-``` r
-library(SummarizedExperiment)
-exp_mat <- gene_by_sample_matrix
-genesets <- list_of_gene_sets
-cell_labels <- sample_by_celltype_matrix
-colData <- DataFrame(exp_label = vector_of_experiment_labels_of_samples,
-                     sample_id = vector_of_sample_ids_of_samples,
-                     study_id = vector_of_study_id_of_samples,
-                     cell_type = vector_of_cell_type_of_samples,
-                     row.names = colnames(exp_mat)
-                     )
-data <- SummarizedExperiment(assays=list(gene_matrix=exp_mat),
-                             colData=colData
-                             metadata = list(genesets = genesets))
-data@colData@metadata <- list(cell_labels = cell_labels)
-``` 
+4.  cell_labels should be provided as a sample-by-cell label matrix. This should
+be a binary (0,1) matrix where 1 indicates cell type membership and 0 indicates 
+non-membership
 
 Additional requirements to be noted:
 
@@ -129,140 +109,149 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 
 # Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
-between all cells for a gene set. All values in the network are then re-ranked and standardized to lie between 0-1.
-Next, the neighbor voting predictor produces a
-weighted matrix of predicted labels by performing matrix multiplication between
-the network and the binary vector indicating cell type membership, then dividing
-each element by the null predictor (i.e., node degree). That is, each cell is
-given a score equal to the fraction of its neighbors (including itself), which
-are part of a given cell type. For cross-validation, we permute through all
-possible combinations of leave-one-dataset-out cross-validation, and we report
-how well we can recover cells of the same type as area under the receiver
-operator characteristic curve (AUROC). This is repeated for all folds of 
-cross-validation, and the mean AUROC across folds is reported.
+between all cells for a gene set. All values in the network are then re-ranked 
+and standardized to lie between 0-1. Next, the neighbor voting predictor 
+produces a weighted matrix of predicted labels by performing matrix 
+multiplication between the network and the binary vector indicating cell type 
+membership, then dividing each element by the null predictor (i.e., node degree)
+. That is, each cell is given a score equal to the fraction of its neighbors 
+(including itself), which are part of a given cell type. For cross-validation, 
+we permute through all possible combinations of leave-one-dataset-out cross-
+validation, and we report how well we can recover cells of the same type as area
+under the receiver operator characteristic curve (AUROC). This is repeated for 
+all folds of cross-validation, and the mean AUROC across folds is reported.
 
 ## Part 1: Supervised MetaNeighbor
 ### Quick start
-To run through the analysis and plot results, simply download the R functions
-and example data [here](https://github.com/mm-shah/MetaNeighbor) and load them
-into your R session:
+To run through the analysis and plot results, simply install the source package 
+from [here](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package)
+and load them into your R session:
 
 ``` r
 library("MetaNeighbor")
 data(mn_data)
-AUROC_scores = run_MetaNeighbor(mn_data, file_ext = "filename")
-hist(AUROC_scores,
-     main = "Sst Chodl",
-     xlab = "AUROC Scores",
-     breaks = 10,
-     xlim = c(0,1))
-abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
+data(gene_set)
+AUROC_scores = MetaNeighbor(data = mn_data,
+                            experiment_labels = as.numeric(factor(mn_data$study_id)),
+                            celltype_labels = mn_data@colData@metadata$cell_labels,
+                            genesets = gene_set,
+                            bplot = TRUE)
 ```
 
 ### More detail
-We have provided sample data, as well as sample gene sets on our [Github site](https://github.com/mm-shah/MetaNeighbor/tree/master/data). In this sample
-data, we have included the cortical interneurons from two public datasets,
-GSE60361 and GSE71585 (RPKM). A subset of ~3000 genes and 10 genesets have been
-included for demonstration. For this example, we will be testing how well we can
-identify the Sst and Nos expressing subtypes, Sst-Chodl from GSE71585 and Int1
-from GSE60361, relative to all other interneurons within their respective
+We have provided sample data, as well as sample gene sets on our [Github site](https://github.com/gillislab/MetaNeighbor/tree/master/data). 
+In this sample data, we have included the cortical interneurons from two public 
+datasets,GSE60361 and GSE71585 (RPKM). A subset of ~3000 genes and 10 genesets 
+have been included for demonstration. For this example, we will be testing how 
+well we can identify the Sst Chodl subtype (Sst-Chodl from GSE71585 and Int1 
+from GSE60361) and the Smad3 subtype (Smad3 from GSE71585 and Int14 from 
+GSE60361), relative to all other interneurons within their respective 
 experiments.
 
 MetaNeighbor requires a SummarizedExperimentObject as input, formatted as 
 specified above. 
 
-There are three outputs of the method:
+There are two outputs of the method:
 
-1.  A vector of AUROC scores representing the mean for each gene set tested is
-returned directly
-2.  A list containing the AUROC score for each dataset and cell type can be
-found in the first output file
-3.  A matrix containing the means for each cell type across datasets can be
-found in the second output fileMetaNeighbor has three outputs, two of which will
-be written out to external
-files. Specify the desired path and file name using the file\_ext variable (e.g.
-"filename")
-
+1.  A matrix of AUROC scores representing the mean for each gene set tested for 
+each celltype
+2.  A beanplot displaying density of AUROC scores for each cell type (by default
+the plot will be displayed and can be turned off by setting the argument 
+`r bplot=FALSE`)
 
 #### Install data and R functions
 
-To run through the analysis, first download the R functions and example data
-from our [Github site](https://github.com/mm-shah/MetaNeighbor) and load them
-into your R session:
+To run through the analysis, simply install the source package from our [Github site](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package) 
+and load them into your R session:
 
-``` r
+``` {r eval = TRUE}
 library("MetaNeighbor")
 data(mn_data)
+data(gene_set)
 ```
 
-#### Run MetaNeighbor
+#### Run MetaNeighbor and plot results
 
-As MetaNeighbor runs, it outputs a number indicating the gene set that is being
-currently evaluated. When all gene sets have been tested, MetaNeighbor will
-return a vector of scores representing the mean for each. A list containing the
-AUROC score for each dataset, cell type and gene set can be found in the 
-"filename.IDscore.list.RData" file that will be saved, and matrix containing the
-mean score for each cell type can be found in "filename.IDscore.matrix.Rdata".
+As MetaNeighbor runs, it outputs the name of the gene set that is being 
+evaluated. When all gene sets have been tested, MetaNeighbor will return a gene 
+set-by-cell type matrix of AUROC scores. A smoothed distribution of scores for 
+each cell type will be plotted by default (turn off plotting by setting 
+`r bplot= FALSE`). Short horizontal lines inside the shape indicate AUROC values
+for individual gene sets, and the large horizontal line represents the mean.
 
-``` r
-AUROC_scores = run_MetaNeighbor(mn_data, file_ext = "filename")
+``` {r eval=TRUE,fig.width=4,fig.height=3}
+AUROC_scores = MetaNeighbor(data = mn_data,
+                            experiment_labels = as.numeric(factor(mn_data$study_id)),
+                            celltype_labels = mn_data@colData@metadata$cell_labels,
+                            genesets = gene_set,
+                            bplot = TRUE)
+```
+
+    ## [1] "GO:0016853"
+    ## [1] "GO:0005615"
+    ## [1] "GO:0005768"
+    ## [1] "GO:0007067"
+    ## [1] "GO:0065003"
+    ## [1] "GO:0042592"
+    ## [1] "GO:0005929"
+    ## [1] "GO:0008565"
+    ## [1] "GO:0016829"
+    ## [1] "GO:0022857"
+<p align="center">
+<img src="./vignettes/figures/beanplot.png"><br>
+<b>Figure 2. AUROC score distributions for each cell type</b>
+</p>
+
+```{r eval= TRUE}
 head(AUROC_scores)
 ```
 
-    ## GO:0016853 GO:0005615 GO:0005768 GO:0007067 GO:0065003 GO:0042592 
-    ##  0.6784072  0.9631236  0.8152228  0.5834635  0.8393333  0.8892412
-
-#### Plot results
-We can plot the distribution of AUROC scores using the histogram function, 
-indicating the mean with a red line.
-
-``` r
-hist(AUROC_scores,
-      main = "Sst Chodl",
-      xlab = "AUROC Scores",
-      breaks = 10,
-      xlim = c(0,1))
-abline(v = mean(AUROC_scores), col = "red", lty = 2, lwd = 2)
-```
-
-![Figure 2](./vignettes/figures/unnamed-chunk-4-1.png)
-<figure align="center">
-<figcaption>
-Figure 2. Histogram of AUROC scores for Sst Chodl
-</figcaption>
-</figure>
-
+    ##             SstChodl     Smad3
+    ## GO:0016853 0.6784072 0.6575645
+    ## GO:0005615 0.9631236 0.9491430
+    ## GO:0005768 0.8152228 0.8701731
+    ## GO:0007067 0.5834635 0.7234393
+    ## GO:0065003 0.8393333 0.9275032
+    ## GO:0042592 0.8892412 0.9546425
+    
 AUROC scores greater than 0.5 indicate improvement over randomly guessing the
 identity of the cell type of interest.
 
 ## Part 2: Unsupervised MetaNeighbor
 ### Quick start
-To run through the analysis and plot results, simply download the R functions
-and example data from our [Github site](https://github.com/mm-shah/MetaNeighbor)
+To run through the analysis and plot results, simply install the source package 
+from our [Github site](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package)
 and load them into your R session:
 
 ``` r
-install.packages("gplots",repos='http://cran.us.r-project.org')
-install.packages("RColorBrewer",repos='http://cran.us.r-project.org')
-library(gplots)
-library(RColorBrewer)
-library("MetaNeighbor")
+library(MetaNeighbor)
 data(mn_data)
-var_genes = get_variable_genes(mn_data)
-celltype_NV = run_MetaNeighbor_US(var_genes, mn_data)
-cols = rev(colorRampPalette(brewer.pal(11,"RdYlBu"))(100))
+var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+celltype_NV = MetaNeighborUS(var_genes = var_genes, 
+                             data = mn_data, 
+                             study_id = mn_data$study_id,
+                             cell_type = mn_data$cell_type)
+top_hits = topHits(cell_NV = celltype_NV,
+                   data = mn_data,
+                   study_id = mn_data$study_id,
+                   cell_type = mn_data$cell_type,
+                   threshold = 0.9)
+top_hits
+cols = rev(colorRampPalette(RColorBrewer::brewer.pal(11,"RdYlBu"))(100))
 breaks = seq(0, 1, length=101)
-heatmap.2(celltype_NV,
-          trace = "none",
-          density.info = "none",
-          col = cols,
-          breaks = breaks,
-          cexRow = 0.6,
-          cexCol = 0.6)
-get_top_hits(celltype_NV, 
-             mn_data,
-             threshold=0.9, 
-             filename="filename.txt")
+gplots::heatmap.2(celltype_NV,
+                  margins=c(8,8),
+                  keysize=1,
+                  key.xlab="AUROC",
+                  key.title=NULL,
+                  trace = "none",
+                  density.info = "none",
+                  col = cols,
+                  breaks = breaks,
+                  offsetRow=0.1, 
+                  offsetCol=0.1, 
+                  cexRow = 0.7,
+                  cexCol = 0.7)
 ```
 
 ### More detail
@@ -292,48 +281,30 @@ comparing brain to pancreas will likely yield some spurious overlaps), or when
 datasets are very unbalanced with respect to one another.
 
 #### Install data and R functions
-We have provided sample data and source code 
-[here](https://github.com/mm-shah/MetaNeighbor). To begin the analysis, simply
-download the data files and functions, then upload them into your R session.
-You will also need to install two helper packages, gplots and RColorBrewer.
+We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package).
+To begin the analysis, simply download and install the source package from the 
+above link into your R session. You will also need to install two helper 
+packages, gplots and RColorBrewer.
 
-``` r
-install.packages("gplots",repos='http://cran.us.r-project.org')
-```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/zr/_w9s0sbs0nz95mrg8tk14xlr0000gn/T//Rtmppkxtg0/downloaded_packages
-
-``` r
-install.packages("RColorBrewer",repos='http://cran.us.r-project.org')
-```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/zr/_w9s0sbs0nz95mrg8tk14xlr0000gn/T//Rtmppkxtg0/downloaded_packages
-
-``` r
-library(gplots)
-library(RColorBrewer)
+```{r eval = TRUE}
 library(MetaNeighbor)
 data(mn_data)
 ```
 
 #### Identify a highly variable gene set
-To begin, we will use the function get\_variable\_genes, which picks the top
+To begin, we will use the function variableGenes, which picks the top
 quartile of variable genes across all but the top decile of expression bins for
 each dataset, then provides the intersect across datasets as the output.
 
-``` r
-var_genes = get_variable_genes(mn_data)
+``` {r eval = TRUE}
+var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
 head(var_genes)
 ```
 
-    ## [1] "1110017D15Rik" "1190002N15Rik" "3110043O21Rik" "Aacs"         
+    ## [1] "1110017D15Rik" "1190002N15Rik" "3110043O21Rik" "Aacs"
     ## [5] "Abcb10"        "Abcb6"
-
-``` r
+    
+``` {r eval = TRUE}
 length(var_genes)
 ```
 
@@ -355,31 +326,36 @@ circumstances, we do not recommend the use of unsupervised MetaNeighbor.
 Once we have a set of highly variable genes, we can simply run an unsupervised
 version of MetaNeighbor using the function:
 
-``` r
-celltype_NV = run_MetaNeighbor_US(var_genes, mn_data)
+``` {r eval=TRUE}
+celltype_NV = MetaNeighborUS(var_genes = var_genes,
+                             data = mn_data, 
+                             study_id = mn_data$study_id,
+                             cell_type = mn_data$cell_type)
 ```
 
 #### Plot results
 Results can be plotted as follows:
-
-``` r
-cols = rev(colorRampPalette(brewer.pal(11,"RdYlBu"))(100))
+``` {r eval=TRUE,fig.width=7,fig.height=6.5}
+cols = rev(colorRampPalette(RColorBrewer::brewer.pal(11,"RdYlBu"))(100))
 breaks = seq(0, 1, length=101)
-heatmap.2(celltype_NV,
-          trace = "none",
-          density.info = "none",
-          col = cols,
-          breaks = breaks,
-          cexRow = 0.6,
-          cexCol = 0.6)
+gplots::heatmap.2(celltype_NV,
+                  margins=c(8,8),
+                  keysize=1,
+                  key.xlab="AUROC",
+                  key.title=NULL,
+                  trace = "none",
+                  density.info = "none",
+                  col = cols,
+                  breaks = breaks,
+                  offsetRow=0.1, 
+                  offsetCol=0.1, 
+                  cexRow = 0.7,
+                  cexCol = 0.7)
 ```
-
-![Figure 3](./vignettes/figures/unnamed-chunk-9-1.png)
-<figure align="center">
-<figcaption>
-Figure 3. Heatmap of mean AUROC scores between all pairs of cell types
-</figcaption>
-</figure>
+<p align="center">
+<img src="./vignettes/figures/unnamed-chunk-9-1.png"><br>
+<b>Figure 3. Heatmap of cell type vs cell type mean AUROC scores</b>
+</p>
 
 This plot shows the AUROC scores between each testing and training pair. Red
 indicates a higher score and blue indicates a lower score. Note that the 
@@ -394,15 +370,16 @@ be used for replicability inference.
 To find reciprocal top hits and those with AUROC&gt;0.9 we use the following 
 code:
 
-``` r
-top_hits = get_top_hits (celltype_NV,
-                         mn_data,
-                         threshold=0.9,
-                         filename="filename.txt")
+```{r eval = TRUE}
+top_hits = topHits(cell_NV = celltype_NV,
+                   data = mn_data,
+                   study_id = mn_data$study_id,
+                   cell_type = mn_data$cell_type,
+                   threshold = 0.9)
 top_hits
 ```
 
-    ##    study_id|Celltype_1  study_id|Celltype_2 Mean_AUROC         Match_type
+    ##    Study_ID|Celltype_1  Study_ID|Celltype_2 Mean_AUROC         Match_type
     ## 1        GSE60361|Int1   GSE71585|Sst_Chodl       0.99 Reciprocal_top_hit
     ## 2        GSE60361|Int7    GSE71585|Vip_Sncg       0.97 Reciprocal_top_hit
     ## 3       GSE60361|Int14       GSE71585|Smad3       0.97 Reciprocal_top_hit
