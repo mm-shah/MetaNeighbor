@@ -106,16 +106,16 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 # Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
 between all cells for a gene set. All values in the network are then re-ranked 
-and standardized to lie between 0-1. Next, the neighbor voting predictor produces
-a weighted matrix of predicted labels by performing matrix multiplication 
-between the network and the binary vector indicating cell type membership, then 
-dividing each element by the null predictor (i.e., node degree). That is, each 
-cell is given a score equal to the fraction of its neighbors (including itself),
-which are part of a given cell type. For cross-validation, we permute through 
-all possible combinations of leave-one-dataset-out cross-validation, and we 
-report how well we can recover cells of the same type as area under the receiver
-operator characteristic curve (AUROC). This is repeated for all folds of 
-cross-validation, and the mean AUROC across folds is reported.
+and standardized to lie between 0-1. Next, the neighbor voting predictor 
+produces a weighted matrix of predicted labels by performing matrix 
+multiplication between the network and the binary vector indicating cell type 
+membership, then dividing each element by the null predictor (i.e., node degree)
+. That is, each cell is given a score equal to the fraction of its neighbors 
+(including itself), which are part of a given cell type. For cross-validation, 
+we permute through all possible combinations of leave-one-dataset-out cross-
+validation, and we report how well we can recover cells of the same type as area
+under the receiver operator characteristic curve (AUROC). This is repeated for 
+all folds of cross-validation, and the mean AUROC across folds is reported.
 
 ## Part 1: Supervised MetaNeighbor
 ### Quick start
@@ -152,7 +152,7 @@ There are two outputs of the method:
 1.  A matrix of AUROC scores representing the mean for each gene set tested for 
 each celltype
 2.  A beanplot displaying density of AUROC scores for each cell type (by default
-the plot will be displayed and can be turned of by setting the argument 
+the plot will be displayed and can be turned off by setting the argument 
 `r bplot=FALSE`)
 
 #### Install data and R functions
@@ -168,10 +168,12 @@ data(gene_set)
 
 #### Run MetaNeighbor and plot results
 
-As MetaNeighbor runs, it outputs a number indicating the gene set that is being
-evaluated. When all gene sets have been tested, MetaNeighbor will return a 
-matrix of AUROC scores for each cell type. A smoothed distribution of scores for
-each cell type can automatically be plotted by setting bplot = TRUE.
+As MetaNeighbor runs, it outputs the name of the gene set that is being 
+evaluated. When all gene sets have been tested, MetaNeighbor will return a gene 
+set-by-cell type matrix of AUROC scores. A smoothed distribution of scores for 
+each cell type will be plotted by default (turn off plotting by setting 
+`r bplot= FALSE`). Short horizontal lines inside the shape indicate AUROC values
+for individual gene sets, and the large horizontal line represents the mean.
 
 ``` {r eval=TRUE,fig.width=4,fig.height=3}
 AUROC_scores = MetaNeighbor(data = mn_data,
@@ -287,12 +289,18 @@ Results can be plotted as follows:
 cols = rev(colorRampPalette(RColorBrewer::brewer.pal(11,"RdYlBu"))(100))
 breaks = seq(0, 1, length=101)
 gplots::heatmap.2(celltype_NV,
+                  margins=c(8,8),
+                  keysize=1,
+                  key.xlab="AUROC",
+                  key.title=NULL,
                   trace = "none",
                   density.info = "none",
                   col = cols,
                   breaks = breaks,
-                  cexRow = 0.6,
-                  cexCol = 0.6)
+                  offsetRow=0.1, 
+                  offsetCol=0.1, 
+                  cexRow = 0.7,
+                  cexCol = 0.7)
 ```
 This plot shows the AUROC scores between each testing and training pair. Red
 indicates a higher score and blue indicates a lower score. Note that the 

@@ -34,12 +34,18 @@ celltype_NV = MetaNeighborUS(var_genes = var_genes,
 cols = rev(colorRampPalette(RColorBrewer::brewer.pal(11,"RdYlBu"))(100))
 breaks = seq(0, 1, length=101)
 gplots::heatmap.2(celltype_NV,
+                  margins=c(8,8),
+                  keysize=1,
+                  key.xlab="AUROC",
+                  key.title=NULL,
                   trace = "none",
                   density.info = "none",
                   col = cols,
                   breaks = breaks,
-                  cexRow = 0.6,
-                  cexCol = 0.6)
+                  offsetRow=0.1, 
+                  offsetCol=0.1, 
+                  cexRow = 0.7,
+                  cexCol = 0.7)
 
 ## ----eval = TRUE---------------------------------------------------------
 top_hits = topHits(cell_NV = celltype_NV,
