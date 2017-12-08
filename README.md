@@ -34,12 +34,10 @@ T cells and hepatocytes for a given gene set, we should see higher correlations
 among all T cells than we do between T cells and hepatocytes. This is 
 illustrated in the schematic below:
 
-![Figure 1](./vignettes/figures/coexp-schem.png)
-<figure align="center">
-<figcaption>
-Figure 1. A. Relationship between gene set expression and cell type B. Cell similarity within and across cell types
-</figcaption>
-</figure>
+<p align="center">
+<img src="./vignettes/figures/coexp-schem.png"><br>
+<b>Figure 1. A. Relationship between gene set expression and cell type B. Cell similarity within and across cell types</b><br>
+</p>
 
 In our approach, this is formalized through neighbor voting based on cell-cell 
 similarities, which will be described in detail in the Methods section. In short
@@ -190,22 +188,19 @@ AUROC_scores = MetaNeighbor(data = mn_data,
 ```
 
     ## [1] "GO:0016853"
-    ## [1] "GO:0005615"
-    ## [1] "GO:0005768"
-    ## [1] "GO:0007067"
-    ## [1] "GO:0065003"
-    ## [1] "GO:0042592"
-    ## [1] "GO:0005929"
-    ## [1] "GO:0008565"
-    ## [1] "GO:0016829"
-    ## [1] "GO:0022857"
-
-![Figure 2](./vignettes/figures/beanplot.png)
-<figure align="center">
-<figcaption>
-Figure 2. AUROC score distributions for each cell type
-</figcaption>
-</figure>
+    ## [1] "GO:0005615"
+    ## [1] "GO:0005768"
+    ## [1] "GO:0007067"
+    ## [1] "GO:0065003"
+    ## [1] "GO:0042592"
+    ## [1] "GO:0005929"
+    ## [1] "GO:0008565"
+    ## [1] "GO:0016829"
+    ## [1] "GO:0022857"
+<p align="center">
+<img src="./vignettes/figures/beanplot.png"><br>
+<b>Figure 2. AUROC score distributions for each cell type</b>
+</p>
 
 ```{r eval= TRUE}
 head(AUROC_scores)
@@ -357,12 +352,10 @@ gplots::heatmap.2(celltype_NV,
                   cexRow = 0.7,
                   cexCol = 0.7)
 ```
-![Figure 3](./vignettes/figures/unnamed-chunk-9-1.png)
-<figure align="center">
-<figcaption>
-Figure 3. Heatmap of cell type vs cell type mean AUROC scores
-</figcaption>
-</figure>
+<p align="center">
+<img src="./vignettes/figures/unnamed-chunk-9-1.png"><br>
+<b>Figure 3. Heatmap of cell type vs cell type mean AUROC scores</b>
+</p>
 
 This plot shows the AUROC scores between each testing and training pair. Red
 indicates a higher score and blue indicates a lower score. Note that the 
