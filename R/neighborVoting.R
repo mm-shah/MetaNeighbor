@@ -4,13 +4,13 @@
 #' association' using cross validation. Performance is evaluated by calculating
 #' the AUROC for each cell type.
 #'
-#' @param exp_labels A numerical vector that indicates the dataset source of
+#' @param exp_labels numerical vector that indicates the dataset source of
 #' each sample
-#' @param cell_labels A sample by cell type matrix that indicates the cell type
-#' of each sample (0-1)
-#' @param network A sample by sample adjacency matrix, ranked and standardized
+#' @param cell_labels sample by cell type matrix that indicates the cell type
+#' of each sample (0-absent; 1-present)
+#' @param network sample by sample adjacency matrix, ranked and standardized
 #' between 0-1
-#' @param means Default TRUE, determines output formatting
+#' @param means default \code{TRUE}, determines output formatting
 #'
 #' @return If \code{means = TRUE} (default) a vector containing the mean of
 #' AUROC values across cross-validation folds will be returned. If FALSE a list
@@ -19,27 +19,32 @@
 #' type is assessed.
 #'
 #' @examples
-#' data(mn_data)
-#' AUROC_scores = run_MetaNeighbor(mn_data, file_ext = "filename")
+#' data("mn_data")
+#' data("gene_set")
+#' AUROC_scores = MetaNeighbor(data = mn_data,
+#'                             experiment_labels = as.numeric(factor(mn_data$study_id)),
+#'                             celltype_labels = mn_data@colData@metadata$cell_labels,
+#'                             genesets = gene_set,
+#'                             bplot = TRUE)
 #' AUROC_scores
-#' @seealso \code{\link{run_MetaNeighbor}}
+#' @seealso \code{\link{MetaNeighbor}}
 #' @export
 #'
 
-neighbor_voting_LeaveOneExpOut <- function (exp_labels,
-                                            cell_labels,
-                                            network,
-                                            means=TRUE){
+neighborVoting <- function (exp_labels,
+                            cell_labels,
+                            network,
+                            means=TRUE){
 
     # cell_labels : needs to be in 1s and 0s
-    l <- dim(cell_labels)[2]
-    c <- dim(cell_labels)[1]
+    x1 <- dim(cell_labels)[2]
+    x2 <- dim(cell_labels)[1]
     e <- unique(exp_labels)
 
 
     #print("Make genes label CV matrix")
-    test_cell_labels <- matrix(cell_labels, nrow=c, ncol = length(e)*l)
-    exp_cols <- rep(e, each = l)
+    test_cell_labels <- matrix(cell_labels, nrow=x2, ncol = length(e)*x1)
+    exp_cols <- rep(e, each = x1)
 
     for (i in 1:length(e)){
         d <- which(exp_labels == i)
@@ -75,7 +80,7 @@ neighbor_voting_LeaveOneExpOut <- function (exp_labels,
                         FUN = rank,
                         na.last = "keep",
                         ties.method = "average")
-    filter <- matrix(cell_labels, nrow = c, ncol = length(e)*l)
+    filter <- matrix(cell_labels, nrow = x2, ncol = length(e)*x1)
 
     for (i in 1:length(e)){
         d <- which(exp_labels != i)
@@ -100,7 +105,7 @@ neighbor_voting_LeaveOneExpOut <- function (exp_labels,
 
     #print("Calculate ROC - rocN")
     rocNV           <- (p/np - (np+1)/2)/nn
-    rocNV           <- matrix(rocNV, ncol = length(e), nrow = l)
+    rocNV           <- matrix(rocNV, ncol = length(e), nrow = x1)
     colnames(rocNV) <- e
     rownames(rocNV) <- colnames(cell_labels)
 

@@ -3,29 +3,43 @@
 #' Identifies genes with high variance compared to their median expression
 #' (top quartile) within each experimentCertain function
 #'
-#' @param mn_data A SummarizedExperiment object containing gene-by-sample
+#' @param data SummarizedExperiment object containing gene-by-sample
 #' expression matrix.
-#'
+#' @param i default value 1; non-zero index value of assay containing the matrix data
+#' @param exp_labels character vector that denotes the source (Study ID) of 
+#' each sample.
+#' 
 #' @return The output is a vector of gene names that are highly variable in
 #' every experiment (intersect)
 #'
 #' @examples
 #' data(mn_data)
-#' var_genes = get_variable_genes(mn_data)
+#' var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
 #' var_genes
 #'
 #' @export
 #'
 
-get_variable_genes <- function(mn_data) {
-    eval_obj(mn_data)
-    data <- SummarizedExperiment::assays(mn_data)[[1]]
+variableGenes <- function(data, i = 1, exp_labels) {
+    
+    data <- SummarizedExperiment::assay(data, i = i)
     var_genes1 <- vector("list")
-    experiment <- unique(mn_data$study_id)
     j <- 1
-
-    for(exp in experiment){
-        data_subset   <- data[ , mn_data$study_id == exp]
+    
+    #check length of exp_labels equal # of samples
+    if(length(exp_labels) != length(colnames(data))){
+        stop('experiment_labels length does not match number of samples')
+    }
+    
+    #check obj contains more than 1 unique study_id
+    if(length(unique(exp_labels)) < 2){
+        stop('Found only 1 unique exp_labels. Please use data from more than 1 study!')
+    }
+    
+    
+    experiments <- unique(exp_labels)
+    for(exp in experiments){
+        data_subset   <- data[ , exp_labels == exp]
         genes_list    <- vector("list")
         median_data   <- apply(data_subset, MARGIN = 1, FUN = stats::median)
         variance_data <- apply(data_subset, MARGIN = 1, FUN = stats::var)

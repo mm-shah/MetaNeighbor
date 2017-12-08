@@ -16,10 +16,6 @@
   al)}
   \item{cell_type}{A character vector of length 1051 that indicates the
   cell-type of each sample}
-  \item{genesets}{List containing gene symbols for 10 GO function (GO:0016853
-  , GO:0005615, GO:0005768, GO:0007067, GO:0065003, GO:0042592, GO:0005929,
-  GO:0008565, GO:0016829, GO:0022857) downloaded from the Gene Ontology
-  Consortuum August 2015 \url{http://www.geneontology.org/}}
 }}
 \source{
 Dataset:\url{https://github.com/mm-shah/MetaNeighbor/tree/master/data} 1. Zeisal et al. \url{http://science.sciencemag.org/content/347/6226/1138}
