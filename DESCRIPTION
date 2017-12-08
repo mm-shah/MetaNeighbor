@@ -1,13 +1,10 @@
 Package: MetaNeighbor
 Type: Package
 Title: Method to rapidly assess cell type identity using gene sets
-Version: 0.99.5
-Author@R: c(
-    person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
+Version: 0.99.6
+Author: c(person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
     person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb")),
     person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb")),
-    person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")))
-Author: c(person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "cre")),
     person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")))
 Description: MetaNeighbor is a replication framework, that allows researchers to
     quantify the degree to which cell types replicate across datasets, and to
