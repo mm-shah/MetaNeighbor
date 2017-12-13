@@ -50,7 +50,7 @@ variableGenes <- function(data, i = 1, exp_labels) {
                                                 type = 5))
         genes_list    <- vector("list", length = length(quant_med))
 
-        for(i in 1:length(quant_med)){
+        for(i in seq_along(quant_med)){
             if(i == 1){
                 filt1     <- median_data <= quant_med[i]
                 var_temp  <- variance_data[filt1]
