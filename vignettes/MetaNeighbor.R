@@ -4,7 +4,7 @@ data(mn_data)
 data(gene_set)
 
 ## ----eval=TRUE,fig.width=4,fig.height=3----------------------------------
-AUROC_scores = MetaNeighbor(data = mn_data,
+AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
                             genesets = gene_set,
@@ -18,7 +18,7 @@ library(MetaNeighbor)
 data(mn_data)
 
 ## ----eval = TRUE---------------------------------------------------------
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 head(var_genes)
 
 ## ----eval = TRUE---------------------------------------------------------
@@ -26,7 +26,7 @@ length(var_genes)
 
 ## ----eval=TRUE-----------------------------------------------------------
 celltype_NV = MetaNeighborUS(var_genes = var_genes,
-                             data = mn_data, 
+                             dat = mn_data, 
                              study_id = mn_data$study_id,
                              cell_type = mn_data$cell_type)
 
@@ -49,7 +49,7 @@ gplots::heatmap.2(celltype_NV,
 
 ## ----eval = TRUE---------------------------------------------------------
 top_hits = topHits(cell_NV = celltype_NV,
-                   data = mn_data,
+                   dat = mn_data,
                    study_id = mn_data$study_id,
                    cell_type = mn_data$cell_type,
                    threshold = 0.9)
