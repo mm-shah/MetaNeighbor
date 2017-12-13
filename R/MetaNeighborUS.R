@@ -49,7 +49,7 @@ MetaNeighborUS <- function(var_genes, dat, i = 1, study_id, cell_type){
     pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "|")
     celltypes   <- unique(pheno$StudyID_CT)
     cell_labels <- matrix(0, ncol=length(celltypes), nrow=dim(pheno)[1])
-    rownames(cell_labels) <-colnames(data)
+    rownames(cell_labels) <-colnames(dat)
     colnames(cell_labels) <- celltypes
 
     for(i in seq_along(celltypes)){
