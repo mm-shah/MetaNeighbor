@@ -5,7 +5,7 @@
 #' requiring in-depth knowledge of marker genes
 #'
 #' @param var_genes vector of high variance genes.
-#' @param data SummarizedExperiment object containing gene-by-sample
+#' @param dat SummarizedExperiment object containing gene-by-sample
 #' expression matrix. 
 #' @param i default value 1; non-zero index value of assay containing the matrix
 #' data
