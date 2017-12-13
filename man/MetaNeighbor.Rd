@@ -11,7 +11,8 @@ MetaNeighbor(dat, i = 1, experiment_labels, celltype_labels, genesets,
 \item{dat}{A SummarizedExperiment object containing gene-by-sample
 expression matrix.}
 
-\item{i}{default value 1; non-zero index value of assay containing the matrix data}
+\item{i}{default value 1; non-zero index value of assay containing the matrix
+data}
 
 \item{experiment_labels}{A numerical vector that indicates the source of each
 sample.}
