@@ -29,11 +29,11 @@
 #' @seealso \code{\link{neighborVoting}}
 #' @examples
 #' data("mn_data")
-#' data("gene_set")
+#' data("GOmouse")
 #' AUROC_scores = MetaNeighbor(dat = mn_data,
 #'                             experiment_labels = as.numeric(factor(mn_data$study_id)),
 #'                             celltype_labels = mn_data@colData@metadata$cell_labels,
-#'                             genesets = gene_set,
+#'                             genesets = GOmouse,
 #'                             bplot = TRUE)
 #' @export
 #'
