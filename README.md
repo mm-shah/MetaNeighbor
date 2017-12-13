@@ -131,7 +131,7 @@ and load them into your R session:
 library("MetaNeighbor")
 data(mn_data)
 data(gene_set)
-AUROC_scores = MetaNeighbor(data = mn_data,
+AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
                             genesets = gene_set,
@@ -180,7 +180,7 @@ each cell type will be plotted by default (turn off plotting by setting
 for individual gene sets, and the large horizontal line represents the mean.
 
 ``` {r eval=TRUE,fig.width=4,fig.height=3}
-AUROC_scores = MetaNeighbor(data = mn_data,
+AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
                             genesets = gene_set,
@@ -226,13 +226,13 @@ and load them into your R session:
 ``` r
 library(MetaNeighbor)
 data(mn_data)
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 celltype_NV = MetaNeighborUS(var_genes = var_genes, 
-                             data = mn_data, 
+                             dat = mn_data, 
                              study_id = mn_data$study_id,
                              cell_type = mn_data$cell_type)
 top_hits = topHits(cell_NV = celltype_NV,
-                   data = mn_data,
+                   dat = mn_data,
                    study_id = mn_data$study_id,
                    cell_type = mn_data$cell_type,
                    threshold = 0.9)
@@ -297,7 +297,7 @@ quartile of variable genes across all but the top decile of expression bins for
 each dataset, then provides the intersect across datasets as the output.
 
 ``` {r eval = TRUE}
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 head(var_genes)
 ```
 
@@ -328,7 +328,7 @@ version of MetaNeighbor using the function:
 
 ``` {r eval=TRUE}
 celltype_NV = MetaNeighborUS(var_genes = var_genes,
-                             data = mn_data, 
+                             dat = mn_data, 
                              study_id = mn_data$study_id,
                              cell_type = mn_data$cell_type)
 ```
@@ -372,7 +372,7 @@ code:
 
 ```{r eval = TRUE}
 top_hits = topHits(cell_NV = celltype_NV,
-                   data = mn_data,
+                   dat = mn_data,
                    study_id = mn_data$study_id,
                    cell_type = mn_data$cell_type,
                    threshold = 0.9)
