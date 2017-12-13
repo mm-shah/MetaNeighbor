@@ -9,15 +9,15 @@ MetaNeighborUS(var_genes, dat, i = 1, study_id, cell_type)
 \arguments{
 \item{var_genes}{vector of high variance genes.}
 
+\item{dat}{SummarizedExperiment object containing gene-by-sample
+expression matrix.}
+
 \item{i}{default value 1; non-zero index value of assay containing the matrix
 data}
 
 \item{study_id}{a vector that lists the Study (dataset) ID for each sample}
 
 \item{cell_type}{a vector that lists the cell type of each sample}
-
-\item{data}{SummarizedExperiment object containing gene-by-sample
-expression matrix.}
 }
 \value{
 The output is a cell type-by-cell type mean AUROC matrix, which is 
