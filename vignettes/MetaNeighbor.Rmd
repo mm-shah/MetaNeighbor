@@ -126,11 +126,11 @@ and load them into your R session:
 ``` r
 library("MetaNeighbor")
 data(mn_data)
-data(gene_set)
+data(GOmouse)
 AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
-                            genesets = gene_set,
+                            genesets = GOmouse,
                             bplot = TRUE)
 ```
 
@@ -163,7 +163,7 @@ and load them into your R session:
 ``` {r eval = TRUE}
 library("MetaNeighbor")
 data(mn_data)
-data(gene_set)
+data(GOmouse)
 ```
 
 #### Run MetaNeighbor and plot results
@@ -179,7 +179,7 @@ for individual gene sets, and the large horizontal line represents the mean.
 AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
-                            genesets = gene_set,
+                            genesets = GOmouse,
                             bplot = TRUE)
 ```
 ```{r eval= TRUE}
