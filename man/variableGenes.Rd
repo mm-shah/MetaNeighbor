@@ -25,7 +25,7 @@ Identifies genes with high variance compared to their median expression
 }
 \examples{
 data(mn_data)
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 var_genes
 
 }
