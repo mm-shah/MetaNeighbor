@@ -1,5 +1,5 @@
-#' @name gene_set
-#' @title gene_set
+#' @name GOmouse
+#' @title GOmouse
 #'
 #' @description List containing gene symbols for 10 GO function
 #'
@@ -10,11 +10,12 @@
 #'   \item{genesets}{List containing gene symbols for 10 GO function (GO:0016853
 #'   , GO:0005615, GO:0005768, GO:0007067, GO:0065003, GO:0042592, GO:0005929,
 #'   GO:0008565, GO:0016829, GO:0022857) downloaded from the Gene Ontology
-#'   Consortuum August 2015 \url{http://www.geneontology.org/}}
+#'   Consortium August 2015 \url{http://www.geneontology.org/page/download-annotations}}
 #' }
 #'
-#' @source Dataset:\url{https://github.com/mm-shah/MetaNeighbor/tree/master/data}
-#' @rdname gene_set
+#' @source Dataset: \url{https://github.com/mm-shah/MetaNeighbor/tree/master/data}
+#' | Paper: \url{https://www.biorxiv.org/content/early/2017/06/16/150524}
+#' @rdname GOmouse
 #' 
 
-"gene_set"
+"GOmouse"

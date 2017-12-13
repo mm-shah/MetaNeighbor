@@ -4,12 +4,12 @@
 \alias{MetaNeighborUS}
 \title{Runs unsupervised version of MetaNeighbor}
 \usage{
-MetaNeighborUS(var_genes, data, i = 1, study_id, cell_type)
+MetaNeighborUS(var_genes, dat, i = 1, study_id, cell_type)
 }
 \arguments{
 \item{var_genes}{vector of high variance genes.}
 
-\item{data}{SummarizedExperiment object containing gene-by-sample
+\item{dat}{SummarizedExperiment object containing gene-by-sample
 expression matrix.}
 
 \item{i}{default value 1; non-zero index value of assay containing the matrix
@@ -33,9 +33,9 @@ requiring in-depth knowledge of marker genes
 }
 \examples{
 data(mn_data)
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 celltype_NV = MetaNeighborUS(var_genes = var_genes, 
-                             data = mn_data, 
+                             dat = mn_data, 
                              study_id = mn_data$study_id,
                              cell_type = mn_data$cell_type)
 celltype_NV

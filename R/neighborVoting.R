@@ -20,11 +20,11 @@
 #'
 #' @examples
 #' data("mn_data")
-#' data("gene_set")
-#' AUROC_scores = MetaNeighbor(data = mn_data,
+#' data("GOmouse")
+#' AUROC_scores = MetaNeighbor(dat = mn_data,
 #'                             experiment_labels = as.numeric(factor(mn_data$study_id)),
 #'                             celltype_labels = mn_data@colData@metadata$cell_labels,
-#'                             genesets = gene_set,
+#'                             genesets = GOmouse,
 #'                             bplot = TRUE)
 #' AUROC_scores
 #' @seealso \code{\link{MetaNeighbor}}
@@ -46,7 +46,7 @@ neighborVoting <- function (exp_labels,
     test_cell_labels <- matrix(cell_labels, nrow=x2, ncol = length(e)*x1)
     exp_cols <- rep(e, each = x1)
 
-    for (i in 1:length(e)){
+    for (i in seq_along(e)){
         d <- which(exp_labels == i)
         a <- which(exp_cols == i)
         test_cell_labels[d,a] <- 0
@@ -68,7 +68,7 @@ neighborVoting <- function (exp_labels,
     predicts[nans] <- NA
 
     #Hide other experiment data
-    for (i in 1:length(e)){
+    for (i in seq_along(e)){
         d <- which(exp_labels != i)
         a <- which(exp_cols == i)
         predicts[d,a] <- NA
@@ -82,7 +82,7 @@ neighborVoting <- function (exp_labels,
                         ties.method = "average")
     filter <- matrix(cell_labels, nrow = x2, ncol = length(e)*x1)
 
-    for (i in 1:length(e)){
+    for (i in seq_along(e)){
         d <- which(exp_labels != i)
         a <- which(exp_cols ==i )
         filter[d,a] <- NA

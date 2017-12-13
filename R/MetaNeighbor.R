@@ -15,9 +15,10 @@
 #' mean AUROC across folds is reported. Calls
 #' \code{\link{neighborVoting}}.
 #'
-#' @param data A SummarizedExperiment object containing gene-by-sample
+#' @param dat A SummarizedExperiment object containing gene-by-sample
 #' expression matrix.
-#' @param i default value 1; non-zero index value of assay containing the matrix data
+#' @param i default value 1; non-zero index value of assay containing the matrix
+#' data
 #' @param experiment_labels A numerical vector that indicates the source of each
 #' sample.
 #' @param celltype_labels A matrix that indicates the cell type of each sample.
@@ -29,26 +30,26 @@
 #' @seealso \code{\link{neighborVoting}}
 #' @examples
 #' data("mn_data")
-#' data("gene_set")
-#' AUROC_scores = MetaNeighbor(data = mn_data,
+#' data("GOmouse")
+#' AUROC_scores = MetaNeighbor(dat = mn_data,
 #'                             experiment_labels = as.numeric(factor(mn_data$study_id)),
 #'                             celltype_labels = mn_data@colData@metadata$cell_labels,
-#'                             genesets = gene_set,
+#'                             genesets = GOmouse,
 #'                             bplot = TRUE)
 #' @export
 #'
 
-MetaNeighbor <-function(data, i = 1, experiment_labels, celltype_labels, genesets, bplot = TRUE) {
+MetaNeighbor <-function(dat, i = 1, experiment_labels, celltype_labels, genesets, bplot = TRUE) {
     
-    data <- SummarizedExperiment::assay(data, i = i)
+    dat <- SummarizedExperiment::assay(dat, i = i)
     
     #check length of experiment_labels equal # of samples
-    if(length(experiment_labels) != length(colnames(data))){
+    if(length(experiment_labels) != length(colnames(dat))){
         stop('experiment_labels length does not match number of samples')
     }
     
     #check length of celltype_labels equal # of samples
-    if(length(rownames(celltype_labels)) != length(colnames(data))){
+    if(length(rownames(celltype_labels)) != length(colnames(dat))){
         stop('celltype_labels length does not match number of samples')
     }
     
@@ -59,7 +60,7 @@ MetaNeighbor <-function(data, i = 1, experiment_labels, celltype_labels, geneset
     
     #check genesets matches more than 1 genes in gene_matrix
     genes_in_geneset <- as.character(unlist(genesets))
-    genes_in_matrix <- rownames(data)
+    genes_in_matrix <- rownames(dat)
     if(length(intersect(genes_in_geneset,genes_in_matrix)) < 1)
         stop('No matching genes between genesets and gene_matrix')
     
@@ -75,8 +76,8 @@ MetaNeighbor <-function(data, i = 1, experiment_labels, celltype_labels, geneset
     for(l in seq_along(genesets)){
         print(names(genesets)[l])
         geneset     <- genesets[[l]]
-        m           <- match(rownames(data), geneset)
-        dat_sub     <- data[!is.na(m),]
+        m           <- match(rownames(dat), geneset)
+        dat_sub     <- dat[!is.na(m),]
         dat_sub     <- stats::cor(dat_sub, method = "s")
         dat_sub     <- as.matrix(dat_sub)
         rank_dat    <- dat_sub

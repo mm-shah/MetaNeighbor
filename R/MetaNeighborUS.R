@@ -5,7 +5,7 @@
 #' requiring in-depth knowledge of marker genes
 #'
 #' @param var_genes vector of high variance genes.
-#' @param data SummarizedExperiment object containing gene-by-sample
+#' @param dat SummarizedExperiment object containing gene-by-sample
 #' expression matrix. 
 #' @param i default value 1; non-zero index value of assay containing the matrix
 #' data
@@ -20,9 +20,9 @@
 #'
 #' @examples
 #' data(mn_data)
-#' var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+#' var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 #' celltype_NV = MetaNeighborUS(var_genes = var_genes, 
-#'                              data = mn_data, 
+#'                              dat = mn_data, 
 #'                              study_id = mn_data$study_id,
 #'                              cell_type = mn_data$cell_type)
 #' celltype_NV
@@ -30,10 +30,10 @@
 #' @export
 #'
 
-MetaNeighborUS <- function(var_genes, data, i = 1, study_id, cell_type){
+MetaNeighborUS <- function(var_genes, dat, i = 1, study_id, cell_type){
     
-    data    <- SummarizedExperiment::assay(data, i = i)
-    samples <- colnames(data)
+    dat    <- SummarizedExperiment::assay(dat, i = i)
+    samples <- colnames(dat)
     
     #check obj contains study_id
     if(length(study_id)!=length(samples)){
@@ -49,7 +49,7 @@ MetaNeighborUS <- function(var_genes, data, i = 1, study_id, cell_type){
     pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "|")
     celltypes   <- unique(pheno$StudyID_CT)
     cell_labels <- matrix(0, ncol=length(celltypes), nrow=dim(pheno)[1])
-    rownames(cell_labels) <-colnames(data)
+    rownames(cell_labels) <-colnames(dat)
     colnames(cell_labels) <- celltypes
 
     for(i in seq_along(celltypes)){
@@ -58,7 +58,7 @@ MetaNeighborUS <- function(var_genes, data, i = 1, study_id, cell_type){
         cell_labels[!is.na(matching_celltype),i]  <- 1
     }
 
-    matching_vargenes <- match(rownames(data), var_genes)
+    matching_vargenes <- match(rownames(dat), var_genes)
     matching_vargenes_count   <- sum(!is.na(matching_vargenes))
 
     if(matching_vargenes_count < 2){
@@ -69,7 +69,7 @@ MetaNeighborUS <- function(var_genes, data, i = 1, study_id, cell_type){
                 immediate. = TRUE)
     }
 
-    cor_data    <- stats::cor(data[!is.na(matching_vargenes),], method="s")
+    cor_data    <- stats::cor(dat[!is.na(matching_vargenes),], method="s")
     rank_data   <- cor_data*0
     rank_data[] <- rank(cor_data, ties.method = "average", na.last = "keep")
     rank_data[is.na(rank_data)] <- 0

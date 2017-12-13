@@ -3,7 +3,7 @@
 #' Identifies genes with high variance compared to their median expression
 #' (top quartile) within each experimentCertain function
 #'
-#' @param data SummarizedExperiment object containing gene-by-sample
+#' @param dat SummarizedExperiment object containing gene-by-sample
 #' expression matrix.
 #' @param i default value 1; non-zero index value of assay containing the matrix data
 #' @param exp_labels character vector that denotes the source (Study ID) of 
@@ -14,20 +14,20 @@
 #'
 #' @examples
 #' data(mn_data)
-#' var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+#' var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 #' var_genes
 #'
 #' @export
 #'
 
-variableGenes <- function(data, i = 1, exp_labels) {
+variableGenes <- function(dat, i = 1, exp_labels) {
     
-    data <- SummarizedExperiment::assay(data, i = i)
+    dat <- SummarizedExperiment::assay(dat, i = i)
     var_genes1 <- vector("list")
     j <- 1
     
     #check length of exp_labels equal # of samples
-    if(length(exp_labels) != length(colnames(data))){
+    if(length(exp_labels) != length(colnames(dat))){
         stop('experiment_labels length does not match number of samples')
     }
     
@@ -39,7 +39,7 @@ variableGenes <- function(data, i = 1, exp_labels) {
     
     experiments <- unique(exp_labels)
     for(exp in experiments){
-        data_subset   <- data[ , exp_labels == exp]
+        data_subset   <- dat[ , exp_labels == exp]
         genes_list    <- vector("list")
         median_data   <- apply(data_subset, MARGIN = 1, FUN = stats::median)
         variance_data <- apply(data_subset, MARGIN = 1, FUN = stats::var)
@@ -50,7 +50,7 @@ variableGenes <- function(data, i = 1, exp_labels) {
                                                 type = 5))
         genes_list    <- vector("list", length = length(quant_med))
 
-        for(i in 1:length(quant_med)){
+        for(i in seq_along(quant_med)){
             if(i == 1){
                 filt1     <- median_data <= quant_med[i]
                 var_temp  <- variance_data[filt1]

@@ -4,10 +4,10 @@
 \alias{variableGenes}
 \title{Identify a highly variable gene set}
 \usage{
-variableGenes(data, i = 1, exp_labels)
+variableGenes(dat, i = 1, exp_labels)
 }
 \arguments{
-\item{data}{SummarizedExperiment object containing gene-by-sample
+\item{dat}{SummarizedExperiment object containing gene-by-sample
 expression matrix.}
 
 \item{i}{default value 1; non-zero index value of assay containing the matrix data}
@@ -25,7 +25,7 @@ Identifies genes with high variance compared to their median expression
 }
 \examples{
 data(mn_data)
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 var_genes
 
 }

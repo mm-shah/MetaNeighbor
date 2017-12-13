@@ -4,7 +4,7 @@
 #'
 #' @param cell_NV matrix of celltype-to-celltype AUROC scores
 #' (output from \code{\link{MetaNeighborUS}})
-#' @param data a SummarizedExperiment object containing gene-by-sample
+#' @param dat a SummarizedExperiment object containing gene-by-sample
 #' expression matrix.
 #' @param i default value 1; non-zero index value of assay containing the matrix
 #' data
@@ -18,13 +18,13 @@
 
 #' @examples
 #' data(mn_data)
-#' var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+#' var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 #' celltype_NV = MetaNeighborUS(var_genes = var_genes, 
-#'                              data = mn_data, 
+#'                              dat = mn_data, 
 #'                              study_id = mn_data$study_id,
 #'                              cell_type = mn_data$cell_type)
 #' top_hits = topHits(cell_NV = celltype_NV,
-#'                    data = mn_data,
+#'                    dat = mn_data,
 #'                    study_id = mn_data$study_id,
 #'                    cell_type = mn_data$cell_type,
 #'                    threshold = 0.9)
@@ -33,10 +33,10 @@
 #' @export
 #'
 
-topHits <- function(cell_NV, data, i = 1, study_id, cell_type, threshold=0.95){
+topHits <- function(cell_NV, dat, i = 1, study_id, cell_type, threshold=0.95){
     
-    data    <- SummarizedExperiment::assay(data, i = i)
-    samples <- colnames(data)
+    dat    <- SummarizedExperiment::assay(dat, i = i)
+    samples <- colnames(dat)
     
     #check obj contains study_id
     if(length(study_id)!=length(samples)){
