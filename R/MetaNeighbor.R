@@ -17,7 +17,8 @@
 #'
 #' @param dat A SummarizedExperiment object containing gene-by-sample
 #' expression matrix.
-#' @param i default value 1; non-zero index value of assay containing the matrix data
+#' @param i default value 1; non-zero index value of assay containing the matrix
+#' data
 #' @param experiment_labels A numerical vector that indicates the source of each
 #' sample.
 #' @param celltype_labels A matrix that indicates the cell type of each sample.
