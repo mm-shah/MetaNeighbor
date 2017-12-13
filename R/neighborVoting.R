@@ -46,7 +46,7 @@ neighborVoting <- function (exp_labels,
     test_cell_labels <- matrix(cell_labels, nrow=x2, ncol = length(e)*x1)
     exp_cols <- rep(e, each = x1)
 
-    for (i in 1:length(e)){
+    for (i in seq_along(e)){
         d <- which(exp_labels == i)
         a <- which(exp_cols == i)
         test_cell_labels[d,a] <- 0
@@ -68,7 +68,7 @@ neighborVoting <- function (exp_labels,
     predicts[nans] <- NA
 
     #Hide other experiment data
-    for (i in 1:length(e)){
+    for (i in seq_along(e)){
         d <- which(exp_labels != i)
         a <- which(exp_cols == i)
         predicts[d,a] <- NA
@@ -82,7 +82,7 @@ neighborVoting <- function (exp_labels,
                         ties.method = "average")
     filter <- matrix(cell_labels, nrow = x2, ncol = length(e)*x1)
 
-    for (i in 1:length(e)){
+    for (i in seq_along(e)){
         d <- which(exp_labels != i)
         a <- which(exp_cols ==i )
         filter[d,a] <- NA
