@@ -4,13 +4,13 @@
 \alias{topHits}
 \title{Find reciprocal top hits}
 \usage{
-topHits(cell_NV, data, i = 1, study_id, cell_type, threshold = 0.95)
+topHits(cell_NV, dat, i = 1, study_id, cell_type, threshold = 0.95)
 }
 \arguments{
 \item{cell_NV}{matrix of celltype-to-celltype AUROC scores
 (output from \code{\link{MetaNeighborUS}})}
 
-\item{data}{a SummarizedExperiment object containing gene-by-sample
+\item{dat}{a SummarizedExperiment object containing gene-by-sample
 expression matrix.}
 
 \item{i}{default value 1; non-zero index value of assay containing the matrix
@@ -32,13 +32,13 @@ Identifies reciprocal top hits and high scoring cell type pairs
 }
 \examples{
 data(mn_data)
-var_genes = variableGenes(data = mn_data, exp_labels = mn_data$study_id)
+var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 celltype_NV = MetaNeighborUS(var_genes = var_genes, 
-                             data = mn_data, 
+                             dat = mn_data, 
                              study_id = mn_data$study_id,
                              cell_type = mn_data$cell_type)
 top_hits = topHits(cell_NV = celltype_NV,
-                   data = mn_data,
+                   dat = mn_data,
                    study_id = mn_data$study_id,
                    cell_type = mn_data$cell_type,
                    threshold = 0.9)

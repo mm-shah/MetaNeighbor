@@ -4,11 +4,11 @@
 \alias{MetaNeighbor}
 \title{Runs MetaNeighbor}
 \usage{
-MetaNeighbor(data, i = 1, experiment_labels, celltype_labels, genesets,
+MetaNeighbor(dat, i = 1, experiment_labels, celltype_labels, genesets,
   bplot = TRUE)
 }
 \arguments{
-\item{data}{A SummarizedExperiment object containing gene-by-sample
+\item{dat}{A SummarizedExperiment object containing gene-by-sample
 expression matrix.}
 
 \item{i}{default value 1; non-zero index value of assay containing the matrix data}
@@ -45,7 +45,7 @@ mean AUROC across folds is reported. Calls
 \examples{
 data("mn_data")
 data("gene_set")
-AUROC_scores = MetaNeighbor(data = mn_data,
+AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = mn_data@colData@metadata$cell_labels,
                             genesets = gene_set,
