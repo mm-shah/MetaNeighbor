@@ -75,7 +75,7 @@ MetaNeighbor <-function(dat, i = 1, experiment_labels, celltype_labels, genesets
     for(l in seq_along(genesets)){
         print(names(genesets)[l])
         geneset     <- genesets[[l]]
-        m           <- match(rownames(data), geneset)
+        m           <- match(rownames(dat), geneset)
         dat_sub     <- dat[!is.na(m),]
         dat_sub     <- stats::cor(dat_sub, method = "s")
         dat_sub     <- as.matrix(dat_sub)
