@@ -67,17 +67,22 @@ topHits <- function(cell_NV, dat, i = 1, study_id, cell_type, threshold=0.95){
     # remove self-scores
     diag(cell_NV) <-0
     temp <- vector(length = length(rownames(cell_NV)))
+    geneInd <- vector(length = length(rownames(cell_NV)))
     
     # identify top hits
     for(i in seq_len(dim(cell_NV)[1])){
-        temp[i] <- which.max(cell_NV[i,])
+        val <- which.max(cell_NV[i,])
+        temp[i] <- val
+        geneInd[i] <- names(val)
     }
 
     temp <- cbind(rownames(cell_NV), temp)
     for(i in seq_len(dim(cell_NV)[1])){
         temp[i,2]=cell_NV[i,as.numeric(temp[i,2])]
     }
-
+    
+    rownames(temp) <- geneInd
+    
     recip <- temp[duplicated(temp[,2]),]
     filt  <- as.numeric(temp[,2]) >= threshold
     recip <- rbind(recip,temp[filt,])
