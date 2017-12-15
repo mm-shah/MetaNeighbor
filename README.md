@@ -355,7 +355,7 @@ gplots::heatmap.2(celltype_NV,
                   cexCol = 0.7)
 ```
 <p align="center">
-<img src="./vignettes/figures/unnamed-chunk-9-1.png"><br>
+<img src="./vignettes/figures/heatmap.png"><br>
 <b>Figure 3. Heatmap of cell type vs cell type mean AUROC scores</b>
 </p>
 
