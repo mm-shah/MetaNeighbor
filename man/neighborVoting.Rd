@@ -33,6 +33,7 @@ the AUROC for each cell type.
 \examples{
 data("mn_data")
 data("GOmouse")
+library(SummarizedExperiment)
 AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = metadata(colData(mn_data))[["cell_labels"]],
