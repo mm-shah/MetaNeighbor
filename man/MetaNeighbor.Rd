@@ -49,7 +49,7 @@ data("GOmouse")
 library(SummarizedExperiment)
 AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
-                            celltype_labels = Summarmetadata(colData(mn_data))[["cell_labels"]],
+                            celltype_labels = metadata(colData(mn_data))[["cell_labels"]],
                             genesets = GOmouse,
                             bplot = TRUE)
 }
