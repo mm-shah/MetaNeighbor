@@ -66,11 +66,11 @@ topHits <- function(cell_NV, dat, i = 1, study_id, cell_type, threshold=0.95){
 
     # remove self-scores
     diag(cell_NV) <-0
-    temp <- vector()
-
+    temp <- vector(length = length(rownames(cell_NV)))
+    
     # identify top hits
     for(i in seq_len(dim(cell_NV)[1])){
-        temp <- c(temp, which.max(cell_NV[i,]))
+        temp[i] <- which.max(cell_NV[i,])
     }
 
     temp <- cbind(rownames(cell_NV), temp)
