@@ -107,6 +107,15 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 |            2|          10|     1000|       1000|       979|
 |            2|          10|    10000|         10|      3653|
 
+# Installation
+Install the MetaNeighbor package by running the following command:
+```r
+if (!require('devtools')) {
+  install.packages('devtools', quiet=TRUE)
+}
+devtools::install_git('https://github.com/gillislab/MetaNeighbor')
+```
+
 # Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
 between all cells for a gene set. All values in the network are then re-ranked 
@@ -124,7 +133,8 @@ reported.
 
 ## Part 1: Supervised MetaNeighbor
 ### Quick start
-To run through the analysis and plot results, install the [source package](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package), and run the following commands:
+To run through the analysis and plot results, load the package and run the 
+following commands:
 
 ``` r
 library(MetaNeighbor)
@@ -160,8 +170,7 @@ the plot will be displayed and can be turned off by setting the argument **`bplo
 
 #### Install data and R functions
 
-To run through the analysis, install the [source package](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package) 
-and load them into your R session using the following commands:
+To run through the analysis, run using the following commands:
 
 ``` {r eval = TRUE}
 library(MetaNeighbor)
@@ -219,8 +228,7 @@ identity of the cell type of interest.
 
 ## Part 2: MetaNeighbor for Data Exploration
 ### Quick start
-To run through the analysis and plot results, install the [source package](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package)
-and load them into your R session using following commands:
+To run through the analysis and plot results, run the following commands:
 
 ``` r
 library(MetaNeighbor)
@@ -280,10 +288,8 @@ comparing brain to pancreas will likely yield some spurious overlaps), or when
 datasets are very unbalanced with respect to one another.
 
 #### Install data and R functions
-We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package).
-To begin the analysis, simply download and install the source package from the 
-above link into your R session. You will also need to install two helper 
-packages, gplots and RColorBrewer.
+We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor).
+To begin the analysis, simply load the package into your R session.
 
 ```{r eval = TRUE}
 library(MetaNeighbor)
