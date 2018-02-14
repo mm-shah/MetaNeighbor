@@ -22,7 +22,7 @@ Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
         -   [Run MetaNeighbor for Data Exploration](#run-metaneighbor-for-data-exploration)
         -   [Plot results](#plot-results-1)
         -   [Identify reciprocal top hits and high scoring cell type pairs](#identify-reciprocal-top-hits-and-high-scoring-cell-type-pairs)
--   [FAQ and Contact Information](!faq-and-contact-information)
+-   [FAQ and Contact Information](#faq-and-contact-information)
 
 # Introduction
 The purpose of this method is to measure the similarity of cells across single
