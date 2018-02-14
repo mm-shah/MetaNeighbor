@@ -108,6 +108,7 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 |            2|          10|    10000|         10|      3653|
 
 # Installation
+
 Install the MetaNeighbor package by running the following commands:
 ```r
 if (!require('devtools')) {
