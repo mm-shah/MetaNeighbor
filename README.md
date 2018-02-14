@@ -4,9 +4,7 @@ Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
 
 
 -   [Introduction](#introduction)
--   [Data types](#data-types)
-    -   [Supervised](#supervised)
-    -   [Exploratory](#exploratory)
+-   [Data type requirements](#data-type-requirements)
 -   [System requirements/estimated run times](#system-requirementsestimated-run-times)
 -   [Installation](#installation)
 -   [Methods](#methods)
