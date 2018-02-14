@@ -8,6 +8,7 @@ Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
     -   [Supervised](#supervised)
     -   [Unsupervised](#unsupervised)
 -   [System requirements/estimated run times](#system-requirementsestimated-run-times)
+-   [Installation](#installation)
 -   [Methods](#methods)
 -   [Part 1: Supervised MetaNeighbor](#part-1-supervised-metaneighbor)
     -   [Quick start](#quick-start)
