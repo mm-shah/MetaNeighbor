@@ -1,28 +1,28 @@
 MetaNeighbor: a method to rapidly assess cell type identity using both functional and random gene sets
-================
+2================
 Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
 
 
 -   [Introduction](#introduction)
--   [Data types](#data-types)
-    -   [Supervised](#supervised)
-    -   [Unsupervised](#unsupervised)
+-   [Data type requirements](#data-type-requirements)
 -   [System requirements/estimated run times](#system-requirementsestimated-run-times)
+-   [Installation](#installation)
 -   [Methods](#methods)
 -   [Part 1: Supervised MetaNeighbor](#part-1-supervised-metaneighbor)
     -   [Quick start](#quick-start)
     -   [More detail](#more-detail)
-        -   [Install data and R functions](#install-data-and-r-functions)
+        -   [Load package and data](#load-package-and-data)
         -   [Run MetaNeighbor](#run-metaneighbor)
         -   [Plot results](#plot-results)
--   [Part 2: Unsupervised MetaNeighbor](#part-2-unsupervised-metaneighbor)
+-   [Part 2: MetaNeighbor for Data Exploration](#part-2-metaneighbor-for-data-exploration)
     -   [Quick start](#quick-start-1)
     -   [More detail](#more-detail-1)
-        -   [Install data and R functions](#install-data-and-r-functions-1)
-        -   [Identify a high variance gene set](#identify-a-high-variance-gene-set)
-        -   [Run Unsupervised MetaNeighbor](#run-unsupervised-metaneighbor)
+        -   [Load package and data](#load-package-and-data)
+        -   [Identify a highly variable gene set](#identify-a-high-variance-gene-set)
+        -   [Run MetaNeighbor for data exploration](#run-metaneighbor-for-data-exploration)
         -   [Plot results](#plot-results-1)
         -   [Identify reciprocal top hits and high scoring cell type pairs](#identify-reciprocal-top-hits-and-high-scoring-cell-type-pairs)
+-   [FAQ and Contact Information](#faq-and-contact-information)
 
 # Introduction
 The purpose of this method is to measure the similarity of cells across single
@@ -107,6 +107,15 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 |            2|          10|     1000|       1000|       979|
 |            2|          10|    10000|         10|      3653|
 
+# Installation
+Install the MetaNeighbor package by running the following commands:
+```r
+if (!require('devtools')) {
+  install.packages('devtools', quiet=TRUE)
+}
+devtools::install_git('https://github.com/gillislab/MetaNeighbor')
+```
+
 # Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
 between all cells for a gene set. All values in the network are then re-ranked 
@@ -124,7 +133,7 @@ reported.
 
 ## Part 1: Supervised MetaNeighbor
 ### Quick start
-To run through the analysis and plot results, install the [source package](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package), and run the following commands:
+To run through the analysis and plot results, run the following commands:
 
 ``` r
 library(MetaNeighbor)
@@ -158,10 +167,9 @@ each celltype
 2.  A beanplot displaying density of AUROC scores for each cell type (by default
 the plot will be displayed and can be turned off by setting the argument **`bplot=FALSE`**)
 
-#### Install data and R functions
+#### Load package and data
 
-To run through the analysis, install the [source package](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package) 
-and load them into your R session using the following commands:
+To run through the analysis, run the following commands:
 
 ``` {r eval = TRUE}
 library(MetaNeighbor)
@@ -219,8 +227,7 @@ identity of the cell type of interest.
 
 ## Part 2: MetaNeighbor for Data Exploration
 ### Quick start
-To run through the analysis and plot results, install the [source package](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package)
-and load them into your R session using following commands:
+To run through the analysis and plot results, run the following commands:
 
 ``` r
 library(MetaNeighbor)
@@ -279,11 +286,9 @@ will not hold when experiments contain wholly different cell types (e.g.,
 comparing brain to pancreas will likely yield some spurious overlaps), or when 
 datasets are very unbalanced with respect to one another.
 
-#### Install data and R functions
-We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package).
-To begin the analysis, simply download and install the source package from the 
-above link into your R session. You will also need to install two helper 
-packages, gplots and RColorBrewer.
+#### Load package and data
+We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor).
+To begin the analysis, run the following commands:
 
 ```{r eval = TRUE}
 library(MetaNeighbor)
@@ -321,7 +326,7 @@ number of datasets (2-3), this may indicate that the datasets have different
 cell type  compositions, or have very different gene coverage. Under these
 circumstances, we do not recommend the use of MetaNeighbor. 
 
-#### Run MetaNeighbor for Data Exploration
+#### Run MetaNeighbor for data exploration
 Once we have a set of highly variable genes, we can simply run an exploratory
 version of MetaNeighbor using the function:
 
