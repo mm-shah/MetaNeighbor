@@ -18,7 +18,7 @@ Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
     -   [Quick start](#quick-start-1)
     -   [More detail](#more-detail-1)
         -   [Load package and data](#load-package-and-data)
-        -   [Identify a highly variable gene set](#identify-a-high-variance-gene-set)
+        -   [Identify a highly variable gene set](#identify-a-highly-variable-gene-set)
         -   [Run MetaNeighbor for data exploration](#run-metaneighbor-for-data-exploration)
         -   [Plot results](#plot-results-1)
         -   [Identify reciprocal top hits and high scoring cell type pairs](#identify-reciprocal-top-hits-and-high-scoring-cell-type-pairs)
