@@ -1,10 +1,10 @@
-## ----eval = TRUE---------------------------------------------------------
+## ----eval = TRUE, message=FALSE------------------------------------------
 library(MetaNeighbor)
 library(SummarizedExperiment)
 data(mn_data)
 data(GOmouse)
 
-## ----eval=TRUE,fig.width=4,fig.height=3----------------------------------
+## ----eval=TRUE,fig.width=4,fig.height=3, results='hide'------------------
 AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = metadata(colData(mn_data))[["cell_labels"]],
