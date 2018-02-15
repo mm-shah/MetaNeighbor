@@ -36,51 +36,51 @@ similarity within and across cell types
 </figure>
 
 In our approach, this is formalized through neighbor voting based on cell-cell 
-similarities, which will be described in detail in the Methods section. In short
-, MetaNeighbor takes four inputs: a gene-by-sample expression matrix ("data"), a
-set of labels indicating each sample's dataset of origin ("experiment labels"),
-a set of labels indicating each sample's cell type ("cell type labels") and a
-set of genes ("gene sets"). The output is a performance vector ("AUROC scores"),
-which is the mean area under the receiver operator characteristic curve (AUROC)
-for the given task. This score reflects our ability to rank cells of the same
-known type higher than those of other types within a dataset, and can be
-interpreted as the probability that we will be correct about making a binary 
-classification for a given cell (e.g. neuron vs. non-neuronal cell). An AUROC
-score of 0.5 means that we have performed as well as if we had randomly guessed
-the cell's identity.
+similarities, which will be described in detail in the Methods section. In 
+short, MetaNeighbor takes four inputs: a gene-by-sample expression matrix 
+("data"), a set of labels indicating each sample's dataset of origin 
+("experiment labels"), a set of labels indicating each sample's cell type
+("cell type labels") and a set of genes ("gene sets"). The output is a 
+performance vector ("AUROC scores"), which is the mean area under the receiver 
+operator characteristic curve (AUROC) for the given task. This score reflects 
+our ability to rank cells of the same known type higher than those of other 
+types within a dataset, and can be interpreted as the probability that we will 
+be correct about making a binary classification for a given cell (e.g. neuron 
+vs. non-neuronal cell). An AUROC score of 0.5 means that we have performed as 
+well as if we had randomly guessed the cell's identity.
 
 This is a fully supervised analysis, and requires knowledge of the corresponding
 cell types across datasets. However, we have also used some heuristic measures
 to identify cell types across datasets when labels may be ambiguous or
-uninformative. We will walk through this unsupervised analysis in Part 2 of the
+uninformative. We will walk through this exploratory analysis in Part 2 of the
 vignette.
 
-# Data type requiremnets
+# Data type requirements
 
 For MetaNeighbor to run, the input data should be a SummarizedExperiment object 
 (SEO) with the following considerations:
 
 1.  The gene-by-sample matrix should be an assay of SEO. 
-2.  Gene sets of interest should be provided as a list of vectors
+2.  Gene sets of interest should be provided as a list of vectors.
 3.  Additional data should have following vectors:
-    i)  sample_id : A character vector (length equal to the number of samples) 
-    containing a unique identifier for each sample
-    ii)  study_id : A character vector (length equal to the number of samples)
-    that indicates the source of each sample (ex. "GSE60361" = Zeisel et al, 
-    "GSE71585" = Tasic et al, as in mn_data)
-    iii)  cell_type : A character vector (length equal to the number of samples)
-    that indicates the cell type of each sample
-4.  cell_labels should be provided as a sample-by-cell label matrix. This should
-be a binary (0,1) matrix where 1 indicates cell type membership and 0 indicates 
-non-membership
+    i.  **`sample_id`**: A character vector (length equal to the number of samples)
+    containing a unique identifier for each sample.
+    ii. **`study_id`**: A character vector (length equal to the number of samples) 
+    that indicates the source of each sample (ex."GSE60361" = Zeisel et al,
+    "GSE71585" = Tasic et al, as in mn_data).
+    iii. **`cell_type`**: A character vector (length equal to the number of
+    samples) that indicates the cell type of each sample.
+4.  **`cell_labels`** should be provided as a sample-by-cell label matrix. This
+should be a binary (0,1) matrix where 1 indicates cell type membership and 0 
+indicates non-membership.
 
 Additional requirements to be noted:
 
 1.  It is critical that genes within gene sets match the gene names of the 
-expression matrix
-2.  Gene sets should contain more than one gene
-3.  The row names of the cell_labels object should match the column names of
-the expression matrix
+expression matrix.
+2.  Gene sets should contain more than one gene.
+3.  The row names of the **`cell_labels`** object should match the column names 
+of the expression matrix.
 
 # System requirements/estimated run times
 Because there is a ranking step, the code is not ideal for scaling in the R
@@ -103,25 +103,33 @@ Laptop (OSX 10.10.4, 1.6 GHz, 8GB RAM, R 3.3.2, Rstudio 0.99.446)
 |            2|          10|     1000|       1000|       979|
 |            2|          10|    10000|         10|      3653|
 
+# Installation
+Install the MetaNeighbor package by running the following command:
+```r
+if (!require('devtools')) {
+  install.packages('devtools', quiet=TRUE)
+}
+devtools::install_git('https://github.com/gillislab/MetaNeighbor')
+```
+
 # Methods
 MetaNeighbor runs as follows: first, we build a network of rank correlations
 between all cells for a gene set. All values in the network are then re-ranked 
 and standardized to lie between 0-1. Next, the neighbor voting predictor 
 produces a weighted matrix of predicted labels by performing matrix 
 multiplication between the network and the binary vector indicating cell type 
-membership, then dividing each element by the null predictor (i.e., node degree)
-. That is, each cell is given a score equal to the fraction of its neighbors 
+membership, then dividing each element by the null predictor (i.e., node degree). 
+That is, each cell is given a score equal to the fraction of its neighbors 
 (including itself), which are part of a given cell type. For cross-validation, 
-we permute through all possible combinations of leave-one-dataset-out cross-
-validation, and we report how well we can recover cells of the same type as area
-under the receiver operator characteristic curve (AUROC). This is repeated for 
-all folds of cross-validation, and the mean AUROC across folds is reported.
+we permute through all possible combinations of leave-one-dataset-out 
+cross-validation, and we report how well we can recover cells of the same type 
+as area under the receiver operator characteristic curve (AUROC). This is 
+repeated for all folds of cross-validation, and the mean AUROC across folds is 
+reported.
 
 ## Part 1: Supervised MetaNeighbor
 ### Quick start
-To run through the analysis and plot results, simply install the source package 
-from [here](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package)
-and load them into your R session:
+To run through the analysis and plot results, load the package and run the following commands:
 
 ``` r
 library(MetaNeighbor)
@@ -136,13 +144,12 @@ AUROC_scores = MetaNeighbor(dat = mn_data,
 ```
 
 ### More detail
-We have provided sample data, as well as sample gene sets on our [Github site](https://github.com/gillislab/MetaNeighbor/tree/master/data). 
-In this sample data, we have included the cortical interneurons from two public 
-datasets,GSE60361 and GSE71585 (RPKM). A subset of ~3000 genes and 10 genesets 
-have been included for demonstration. For this example, we will be testing how 
-well we can identify the Sst Chodl subtype (Sst-Chodl from GSE71585 and Int1 
-from GSE60361) and the Smad3 subtype (Smad3 from GSE71585 and Int14 from 
-GSE60361), relative to all other interneurons within their respective 
+We have provided sample data and sample gene sets within the MetaNeighbor 
+package. In this sample data, we have included the cortical interneurons from 
+two public datasets, GSE60361 and GSE71585 (RPKM). A subset of ~3000 genes and 10 genesets have been included for demonstration. For this example, we will be 
+testing how well we can identify the Sst Chodl subtype (Sst-Chodl from GSE71585
+and Int1 from GSE60361) and the Smad3 subtype (Smad3 from GSE71585 and Int14 
+from GSE60361), relative to all other interneurons within their respective
 experiments.
 
 MetaNeighbor requires a SummarizedExperimentObject as input, formatted as 
@@ -153,15 +160,13 @@ There are two outputs of the method:
 1.  A matrix of AUROC scores representing the mean for each gene set tested for 
 each celltype
 2.  A beanplot displaying density of AUROC scores for each cell type (by default
-the plot will be displayed and can be turned off by setting the argument 
-`r bplot=FALSE`)
+the plot will be displayed and can be turned off by setting the argument **`bplot=FALSE`**)
 
-#### Install data and R functions
+#### Load package and data
 
-To run through the analysis, simply install the source package from our [Github site](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package) 
-and load them into your R session:
+To run through the analysis, run the following commands:
 
-``` {r eval = TRUE}
+``` {r eval = TRUE, message=FALSE}
 library(MetaNeighbor)
 library(SummarizedExperiment)
 data(mn_data)
@@ -174,10 +179,10 @@ As MetaNeighbor runs, it outputs the name of the gene set that is being
 evaluated. When all gene sets have been tested, MetaNeighbor will return a gene 
 set-by-cell type matrix of AUROC scores. A smoothed distribution of scores for 
 each cell type will be plotted by default (turn off plotting by setting 
-`r bplot= FALSE`). Short horizontal lines inside the shape indicate AUROC values
+**`bplot= FALSE`**). Short horizontal lines inside the shape indicate AUROC values
 for individual gene sets, and the large horizontal line represents the mean.
 
-``` {r eval=TRUE,fig.width=4,fig.height=3}
+``` {r eval=TRUE,fig.width=4,fig.height=3, results='hide'}
 AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = metadata(colData(mn_data))[["cell_labels"]],
@@ -190,11 +195,9 @@ head(AUROC_scores)
 AUROC scores greater than 0.5 indicate improvement over randomly guessing the
 identity of the cell type of interest.
 
-## Part 2: Unsupervised MetaNeighbor
+## Part 2: MetaNeighbor for Data Exploration
 ### Quick start
-To run through the analysis and plot results, simply install the source package 
-from our [Github site](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package)
-and load them into your R session:
+To run through the analysis and plot results run the following commands:
 
 ``` r
 library(MetaNeighbor)
@@ -236,8 +239,8 @@ in-depth knowledge of marker genes. This was based on our observation that
 large, high variance gene sets tended to provide improved scores for known cell 
 types.
 
-Unsupervised Metaneighbor requires an input SEO as specified above, as well as a
-vector containing a set of variable genes ("var_genes"). The function will use 
+Exploratory Metaneighbor requires an input SEO as specified above, as well as a
+vector containing a set of variable genes (`var_genes`). The function will use 
 the set of variable genes to create a cell-cell similarity network. 
 
 The output of the function is a cell type-by-cell type mean AUROC matrix, which 
@@ -253,11 +256,8 @@ will not hold when experiments contain wholly different cell types (e.g.,
 comparing brain to pancreas will likely yield some spurious overlaps), or when 
 datasets are very unbalanced with respect to one another.
 
-#### Install data and R functions
-We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor/tree/master/source%20package).
-To begin the analysis, simply download and install the source package from the 
-above link into your R session. You will also need to install two helper 
-packages, gplots and RColorBrewer.
+#### Load package and data
+We have provided sample data and source code [here](https://github.com/gillislab/MetaNeighbor).To begin the analysis, simply load the package from the above link into your R session.
 
 ```{r eval = TRUE}
 library(MetaNeighbor)
@@ -287,10 +287,10 @@ the analysis (i.e., include a gene if it is highly variable in >50% of datasets)
 included. However, we note that if few genes are returned when using a small 
 number of datasets (2-3), this may indicate that the datasets have different
 cell type  compositions, or have very different gene coverage. Under these
-circumstances, we do not recommend the use of unsupervised MetaNeighbor. 
+circumstances, we do not recommend the use of MetaNeighbor. 
 
-#### Run Unsupervised MetaNeighbor
-Once we have a set of highly variable genes, we can simply run an unsupervised
+#### Run MetaNeighbor for data exploration
+Once we have a set of highly variable genes, we can simply run an exploratory
 version of MetaNeighbor using the function:
 
 ``` {r eval=TRUE}
@@ -343,5 +343,9 @@ top_hits
 These top hits can then be used for supervised analysis, making putative cell
 type labels for each unique grouping (see Part 1).
 
-For any assistance reproducing analyses please contact mcrow@cshl.edu or
-jgillis@cshl.edu
+#FAQ and Contact Information
+* If you use this package, please cite Crow et al (2018) Nature Communications.
+* Data files used in Crow et al (2018) may be accessed [here](https://www.dropbox.com/sh/9std53hcyafke2c/AAAuwjcOvKSrlZABRJVqVF_pa?dl=0).
+* A development version of MetaNeighbor was first available [here](https://github.com/maggiecrow/MetaNeighbor) (2016) but is no longer maintained.
+* For any assistance reproducing analyses please contact mcrow@cshl.edu or
+jgillis@cshl.edu .
