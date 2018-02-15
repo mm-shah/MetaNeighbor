@@ -409,4 +409,4 @@ type labels for each unique grouping (see Part 1).
 * Data files used in Crow et al (2018) may be accessed [here](https://www.dropbox.com/sh/9std53hcyafke2c/AAAuwjcOvKSrlZABRJVqVF_pa?dl=0).
 * A development version of MetaNeighbor was first available [here](https://github.com/maggiecrow/MetaNeighbor) (2016) but is no longer maintained.
 * For any assistance reproducing analyses please contact mcrow@cshl.edu or
-jgillis@cshl.edu .
+jgillis@cshl.edu.
