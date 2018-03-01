@@ -405,7 +405,7 @@ These top hits can then be used for supervised analysis, making putative cell
 type labels for each unique grouping (see Part 1).
 
 # FAQ and Contact Information
-* If you use this package, please cite Crow et al (2018) Nature Communications.
+* If you use this package, please cite [Crow et al (2018) Nature Communications](https://www.nature.com/articles/s41467-018-03282-0).
 * Data files used in Crow et al (2018) may be accessed [here](https://www.dropbox.com/sh/9std53hcyafke2c/AAAuwjcOvKSrlZABRJVqVF_pa?dl=0).
 * A development version of MetaNeighbor was first available [here](https://github.com/maggiecrow/MetaNeighbor) (2016) but is no longer maintained.
 * For any assistance reproducing analyses please contact mcrow@cshl.edu or
