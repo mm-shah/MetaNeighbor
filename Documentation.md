@@ -1,6 +1,7 @@
 MetaNeighbor: a method to rapidly assess cell type identity using both functional and random gene sets
 ================
-MetaNeighbor allows users to quantify cell type replicability across datasets using neighbor voting.
+Megan Crow, Sara Ballouz, Manthan Shah, Jesse Gillis
+
 
 -   [Introduction](#introduction)
 -   [Data type requirements](#data-type-requirements)

@@ -6,8 +6,10 @@ Authors@R: c(person("Megan", "Crow", email = "mcrow@cshl.edu",role = c("aut", "c
     person("Sara", "Ballouz", email = "sballouz@cshl.edu",role = c("ctb")),
     person("Manthan", "Shah", email = "shah@cshl.edu",role = c("ctb")),
     person("Jesse", "Gillis", email = "JGillis@cshl.edu",role = c("aut")))
+
 Description: MetaNeighbor allows users to quantify cell type replicability across 
     datasets using neighbor voting.
+
 biocViews: GeneExpression, GO, MultipleComparison, SingleCell, Transcriptomics
 License: MIT + file LICENSE
 Depends: R(>= 3.5)
