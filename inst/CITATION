@@ -1,10 +1,12 @@
-bibentry(bibtype = "unpublished",
-    title = "Addressing the loomming identity crisis in single cell RNA-seq",
+bibentry(bibtype = "Article",
+    title = "Characterizing the replicability of cell types defined by single cell RNA-sequencing data using MetaNeighbor",
     author = c(person("Megan", "Crow"),
              person("Anirban", "Paul"),
              person("Sara", "Ballouz"),
              person("Josh", "Huang"),
              person("Jesse", "Gillis")),
-    year = "2017",
-    note = "Published in bioRxiv",
-    doi = "10.1101/150524")
+    journal = "Nature Communications", 
+    volume = 9,
+    number = 884,
+    year = 2018,
+    doi = "10.1038/s41467-018-03282-0")
