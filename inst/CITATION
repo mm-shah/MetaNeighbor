@@ -1,5 +1,5 @@
 bibentry(bibtype = "unpublished",
-    title = "Addressing the loomming identity crisis in single cell RNA-seq",
+    title = "Addressing the looming identity crisis in single cell RNA-seq",
     author = c(person("Megan", "Crow"),
              person("Anirban", "Paul"),
              person("Sara", "Ballouz"),
