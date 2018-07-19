@@ -16,7 +16,9 @@
 #' data(mn_data)
 #' var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
 #' var_genes
-#'
+#' 
+#' @import utils
+#' 
 #' @export
 #'
 
