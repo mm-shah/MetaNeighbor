@@ -4,7 +4,8 @@
 \alias{MetaNeighborUS}
 \title{Runs unsupervised version of MetaNeighbor}
 \usage{
-MetaNeighborUS(var_genes, dat, i = 1, study_id, cell_type)
+MetaNeighborUS(var_genes, dat, i = 1, study_id, cell_type,
+  fast_version = FALSE)
 }
 \arguments{
 \item{var_genes}{vector of high variance genes.}
@@ -18,12 +19,15 @@ data}
 \item{study_id}{a vector that lists the Study (dataset) ID for each sample}
 
 \item{cell_type}{a vector that lists the cell type of each sample}
+
+\item{fast_version}{default value FALSE; a boolean flag indicating whether
+to use the fast and low memory version of MetaNeighbor}
 }
 \value{
-The output is a cell type-by-cell type mean AUROC matrix, which is 
-built by treating each pair of cell types as testing and training data for 
+The output is a cell type-by-cell type mean AUROC matrix, which is
+built by treating each pair of cell types as testing and training data for
 MetaNeighbor, then taking the average AUROC for each pair (NB scores will not
-be identical because each test cell type is scored out of its own dataset, 
+be identical because each test cell type is scored out of its own dataset,
 and the differential heterogeneity of datasets will influence scores).
 }
 \description{
@@ -34,8 +38,8 @@ requiring in-depth knowledge of marker genes
 \examples{
 data(mn_data)
 var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
-celltype_NV = MetaNeighborUS(var_genes = var_genes, 
-                             dat = mn_data, 
+celltype_NV = MetaNeighborUS(var_genes = var_genes,
+                             dat = mn_data,
                              study_id = mn_data$study_id,
                              cell_type = mn_data$cell_type)
 celltype_NV

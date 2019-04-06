@@ -29,8 +29,7 @@
 #'                    cell_type = mn_data$cell_type,
 #'                    threshold = 0.9)
 #' top_hits
-#' 
-#' @import gplots RColorBrewer
+#'
 #' @export
 #'
 
@@ -47,52 +46,59 @@ topHits <- function(cell_NV, dat, i = 1, study_id, cell_type, threshold=0.95){
     #check obj contains cell_type
     if(length(cell_type)!=length(samples)){
         stop('cell_type length does not match number of samples')
+    } 
+    
+    pheno <- as.data.frame(cbind(study_id,cell_type), stringsAsFactors = FALSE)
+    pheno$StudyID_CT <- paste(pheno$study_id, pheno$cell_type, sep = "|")
+    
+    type_by_study <- table(pheno[,"StudyID_CT"])
+    m <- match(rownames(cell_NV), rownames(type_by_study))
+    f_a <- !is.na(m)
+    f_b <- m[f_a]
+    cell_NV <- cell_NV[f_a,f_a]
+    type_by_study <- type_by_study[f_b]
+
+    # remove within-dataset scores
+    for(i in unique(pheno$study_id)){
+        filt <- grepl(i, row.names(type_by_study != 0))
+        cell_NV[filt,filt] <- 0
+    }
+
+    # remove self-scores
+    diag(cell_NV) <-0
+    temp <- vector(length = length(rownames(cell_NV)))
+    geneInd <- vector(length = length(rownames(cell_NV)))
+    
+    # identify top hits
+    for(i in seq_len(dim(cell_NV)[1])){
+        val <- which.max(cell_NV[i,])
+        temp[i] <- val
+        geneInd[i] <- names(val)
+    }
+
+    temp <- cbind(rownames(cell_NV), temp)
+    for(i in seq_len(dim(cell_NV)[1])){
+        temp[i,2]=cell_NV[i,as.numeric(temp[i,2])]
     }
     
-    ct=rownames(cell_NV)
-    ct_study = paste(study_id,cell_type,sep='|')
-    pheno <- as.data.frame(cbind(study_id,cell_type,ct_study), stringsAsFactors = FALSE)
-    type_by_study=table(pheno[,c("ct_study","study_id")])
-    m<-match(ct,rownames(type_by_study))
-    f.a=!is.na(m)
-    f.b=m[f.a]
-    cell_NV=cell_NV[f.a,f.a]
-    type_by_study=type_by_study[f.b,]
+    rownames(temp) <- geneInd
     
-    for(i in seq_along(1:dim(type_by_study)[2])){
-        filt=type_by_study[,i]!=0
-        cell_NV[filt,filt]=0
-    }
-    
-    diag(cell_NV)=0
-    
-    hits=list()
-    names(hits)=
-        for(i in seq_along(1:dim(cell_NV)[1])){
-            hits[[i]]=which(cell_NV[i,]==max(cell_NV[i,]))
-        }
-    
-    temp=matrix(0,ncol=4,nrow=length(hits))
-    for(i in seq_along(1:length(hits))){
-        if(!is.na(temp[i,1])){
-            a = hits[[i]]
-            if(hits[[a]]==i){
-                temp[i,]=c(ct[i],ct[a],round(cell_NV[i,a],2),"Reciprocal_top_hit")
-                temp[a,] = rep(NA,4)
-            }
-            else if(cell_NV[i,a]>=threshold){
-                temp[i,]=c(ct[i],ct[a],round(cell_NV[i,a],2),paste("Above_threshold:",threshold,sep=''))
-            }
-            else {
-                temp[i,] = rep(NA,4)
-            }
-        } else {}
-    }
-    temp = temp[!is.na(temp[,1]),]
-    colnames(temp)=c("Study_ID|Celltype_1","Study_ID|Celltype_2","Mean_AUROC"," Match_type")
-    ord=order(temp[,3])
-    temp=temp[rev(ord),]
-    rownames(temp)=c(1:dim(temp)[1])
-    temp=as.data.frame(temp)
-    return(temp)
+    recip <- temp[duplicated(temp[,2]),]
+    filt  <- as.numeric(temp[,2]) >= threshold
+    recip <- rbind(recip,temp[filt,])
+    recip <- cbind(recip, c(rep("Reciprocal_top_hit",
+                                each=dim(recip)[1]-sum(filt)),
+                            rep(paste("Above",threshold,sep="_"),
+                                each=sum(filt))))
+    recip <- recip[!duplicated(recip[,2]),]
+
+    #tidy results
+    recip2  <- cbind(rownames(recip),recip[,1:3])
+    colnames(recip2) <- c("Study_ID|Celltype_1","Study_ID|Celltype_2","Mean_AUROC","Match_type")
+    rownames(recip2) <- NULL
+
+    recip     <- recip2[order(recip2[,3],decreasing=TRUE),]
+    recip2    <- as.data.frame(recip)
+    recip2[,3]<- round(as.numeric(as.character(recip2[,3])),2)
+    return(recip2)
 }

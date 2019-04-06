@@ -12,7 +12,7 @@ expression matrix.}
 
 \item{i}{default value 1; non-zero index value of assay containing the matrix data}
 
-\item{exp_labels}{character vector that denotes the source (Study ID) of 
+\item{exp_labels}{character vector that denotes the source (Study ID) of
 each sample.}
 }
 \value{

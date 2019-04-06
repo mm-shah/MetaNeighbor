@@ -5,7 +5,7 @@
 \title{Runs MetaNeighbor}
 \usage{
 MetaNeighbor(dat, i = 1, experiment_labels, celltype_labels, genesets,
-  bplot = TRUE)
+  bplot = TRUE, fast_version = FALSE)
 }
 \arguments{
 \item{dat}{A SummarizedExperiment object containing gene-by-sample
