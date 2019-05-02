@@ -22,6 +22,9 @@ sample.}
 \item{genesets}{Gene sets of interest provided as a list of vectors.}
 
 \item{bplot}{default true, beanplot is generated}
+
+\item{fast_version}{default value FALSE; a boolean flag indicating whether
+to use the fast and low memory version of MetaNeighbor}
 }
 \value{
 A matrix of AUROC scores representing the mean for each gene set
@@ -51,7 +54,8 @@ AUROC_scores = MetaNeighbor(dat = mn_data,
                             experiment_labels = as.numeric(factor(mn_data$study_id)),
                             celltype_labels = metadata(colData(mn_data))[["cell_labels"]],
                             genesets = GOmouse,
-                            bplot = TRUE)
+                            bplot = TRUE,
+                            fast_version=FALSE)
 }
 \seealso{
 \code{\link{neighborVoting}}
