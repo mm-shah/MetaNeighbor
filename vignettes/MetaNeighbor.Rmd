@@ -111,11 +111,17 @@ Desktop (Ubuntu 18.04.1 in an Oracle VM, 4 x 3.6 GHz, 10.9GB RAM, R 3.4.4) for t
 (a . indicates that we did not measure this combination of parameters)
 
 # Installation
-Install the MetaNeighbor package by running the following command:
-```r
-if (!require('devtools')) {
-  install.packages('devtools', quiet=TRUE)
-}
+nstall the MetaNeighbor package from Bioconductor by running the following 
+command:
+```{r,eval=F,message=FALSE,warning=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("MetaNeighbor")
+```
+
+The development version of the package can be downloaded using following commands:
+```{r,eval=FALSE,message=FALSE,warning=FALSE}
+if (!require('devtools')) install.packages('devtools', quiet=TRUE)
 devtools::install_git('https://github.com/gillislab/MetaNeighbor')
 ```
 
@@ -138,7 +144,7 @@ reported.
 ### Quick start
 To run through the analysis and plot results, load the package and run the following commands:
 
-``` r
+``` {r message=FALSE, eval=FALSE}
 library(MetaNeighbor)
 library(SummarizedExperiment)
 data(mn_data)
@@ -173,7 +179,7 @@ the plot will be displayed and can be turned off by setting the argument **`bplo
 
 To run through the analysis, run the following commands:
 
-``` r
+``` {r eval = TRUE, message=FALSE}
 library(MetaNeighbor)
 library(SummarizedExperiment)
 data(mn_data)
@@ -206,7 +212,7 @@ identity of the cell type of interest.
 ### Quick start
 To run through the analysis and plot results run the following commands:
 
-``` r
+``` {r eval=FALSE}
 library(MetaNeighbor)
 data(mn_data)
 var_genes = variableGenes(dat = mn_data, exp_labels = mn_data$study_id)
@@ -418,7 +424,7 @@ Every dataset is represented as a SingleCellExperiment object, a subclass of Sum
 Before we apply MetaNeighbor, we need to fuse the datasets as a unique SingleCellExperiment object.
 Start by downloading the Baron and Segerstolpe datasets, then run R and load the following libraries and data:
 
-```{r eval = TRUE, message = FALSE}
+```{r eval = FALSE, message = FALSE}
 library(SingleCellExperiment)
 library(Matrix)
 baron <- readRDS('baron-human.rds')
@@ -426,14 +432,14 @@ segerstolpe <- readRDS('segerstolpe.rds')
 ```
 
 In this analysis, we remove dead cells and doublets from the Segerstolpe dataset, and retain the genes that are common to the two datasets:
-```{r eval = TRUE}
+```{r eval = FALSE}
 common_genes <- intersect(rownames(baron), rownames(segerstolpe))
 baron <- baron[common_genes,]
 segerstolpe <- segerstolpe[common_genes, !(segerstolpe$cell_type1 %in% c('not applicable', 'co-expression'))]
 ```
 
 We create a SingleCellExperiment that is a fusion of the two datasets, then remove the single datasets:
-```{r eval = TRUE}
+```{r eval = FALSE}
 new_colData = data.frame(
   study_id = rep(c('baron', 'segerstolpe'), c(ncol(baron), ncol(segerstolpe))),
   cell_type = c(as.character(colData(baron)$cell_type1), colData(segerstolpe)$cell_type1)
@@ -443,7 +449,6 @@ pancreas <- SingleCellExperiment(
   colData = new_colData
 )
 dim(pancreas)
-rm(baron); rm(segerstolpe)
 ```
 
 The fused dataset has 10,739 samples across 18,936 genes.
@@ -451,7 +456,7 @@ The fused dataset has 10,739 samples across 18,936 genes.
 #### Example with 2 datasets: match labels
 
 Now that the dataset is ready, we can find variable genes and run the unsupervised version of MetaNeighbor:
-```{r eval = TRUE, fig.width=7,fig.height=6.5}
+```{r eval = FALSE, fig.width=7,fig.height=6.5}
 var_genes = variableGenes(dat = pancreas, exp_labels = pancreas$study_id)
 celltype_NV = MetaNeighborUS(var_genes = var_genes,
                              dat = pancreas,
@@ -475,12 +480,17 @@ gplots::heatmap.2(celltype_NV,
                   cexCol = 0.7)
 ```
 
+![MNUS_pancreas_2](./figures/MNUS_pancreas_2)
+<figure align="center">
+<figcaption>
+</figcaption>
+</figure>
 
 ### Apply MetaNeighbor to a collection of 5 datasets
 
 Using a procedure similar to the above example, we generated a SingleCellExperiment with all 5 pancreas datasets. We encourage you to fuse the datasets on your own, then load the resulting SingleCellExperiment object:
 
-```{r eval = TRUE}
+```{r eval = FALSE}
 all_pancreas <- readRDS('all_pancreas.rds')
 dim(all_pancreas)
 ```
@@ -490,7 +500,7 @@ Our fused dataset has 15,138 cells across 15,558 genes.
 #### Match labels
 
 Select variable genes, then run unsupervised MetaNeighbor to match labels across studies:
-```{r eval = TRUE, eval=TRUE,fig.width=7,fig.height=6.5}
+```{r eval = FALSE,fig.width=7,fig.height=6.5}
 var_genes = variableGenes(dat = all_pancreas, exp_labels = all_pancreas$Study_ID)
 celltype_NV = MetaNeighborUS(var_genes = var_genes,
                              dat = all_pancreas,
@@ -514,10 +524,17 @@ gplots::heatmap.2(celltype_NV,
                   cexCol = 0.7)
 ```
 
+![MNUS_pancreas_5](./figures/MNUS_pancreas_5)
+<figure align="center">
+<figcaption>
+</figcaption>
+</figure>
+
+
 #### Run MetaNeighbor on common labels
 
 Run MetaNeighbor for labels that span all datasets with 71 gene sets (GO slim terms containing 50 to 1,000 genes):
-```{r eval = TRUE,fig.width=4,fig.height=3, results='hide'}
+```{r eval = FALSE,fig.width=4,fig.height=3, results='hide'}
 data(GOhuman)
 small_pancreas = all_pancreas[, all_pancreas$Celltype %in% c('alpha', 'beta', 'delta')]
 celltype_matrix = model.matrix(~small_pancreas$Celltype - 1)
@@ -529,6 +546,13 @@ AUROC_scores = MetaNeighbor(dat = small_pancreas,
                             bplot = TRUE,
                             fast_version = TRUE)
 ```
+
+![MN_pancreas](./figures/MN_pancreas)
+<figure align="center">
+<figcaption>
+</figcaption>
+</figure>
+
 
 # FAQ and Contact Information
 
