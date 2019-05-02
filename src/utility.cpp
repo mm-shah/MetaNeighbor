@@ -1,4 +1,3 @@
-
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -24,6 +23,7 @@ NumericMatrix normalize_cols_cpp(SEXP M) {
     case INTSXP: return normalize_cols_cpp_imp<INTSXP>(M);
     case REALSXP: return normalize_cols_cpp_imp<REALSXP>(M);
   }
+  return 0;
 }
 
 // [[Rcpp::export]]
