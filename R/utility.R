@@ -1,3 +1,4 @@
+
 # Contains a collection of utility functions
 
 
@@ -96,7 +97,7 @@ compute_aurocs <- function(votes, candidate_id = NULL) {
 design_matrix <- function(cell_type) {
   cell_type <- as.factor(cell_type)
   if (length(levels(cell_type)) > 1) {
-    result <- model.matrix(~cell_type-1)
+    result <- stats::model.matrix(~cell_type-1)
   } else {
     result <- matrix(1, nrow = length(cell_type), ncol = 1)
   }
@@ -115,10 +116,10 @@ create_result_matrix <- function(cell_type) {
 
 # Return study id from a label in format 'study_id|cell_type'
 get_study_id <- function(cluster_name) {
-  return(sapply(strsplit(cluster_name, "\\|"), head, 1))
+  return(sapply(strsplit(cluster_name, "\\|"), utils::head, 1))
 }
 
 # Return cell type from a label in format 'study_id|cell_type'
 get_cell_type <- function(cluster_name) {
-  return(sapply(strsplit(cluster_name, "\\|"), tail, 1))
+  return(sapply(strsplit(cluster_name, "\\|"), utils::tail, 1))
 }

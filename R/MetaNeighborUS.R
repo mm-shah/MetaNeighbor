@@ -26,7 +26,8 @@
 #' celltype_NV = MetaNeighborUS(var_genes = var_genes,
 #'                              dat = mn_data,
 #'                              study_id = mn_data$study_id,
-#'                              cell_type = mn_data$cell_type)
+#'                              cell_type = mn_data$cell_type,
+#'                              fast_version=FALSE)
 #' celltype_NV
 #'
 #' @export

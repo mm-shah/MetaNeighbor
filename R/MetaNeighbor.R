@@ -24,6 +24,8 @@
 #' @param celltype_labels A matrix that indicates the cell type of each sample.
 #' @param genesets Gene sets of interest provided as a list of vectors.
 #' @param bplot default true, beanplot is generated
+#' @param fast_version default value FALSE; a boolean flag indicating whether
+#' to use the fast and low memory version of MetaNeighbor
 #' @return A matrix of AUROC scores representing the mean for each gene set
 #' tested for each celltype is returned directly (see \code{\link{neighborVoting}}).
 #'
@@ -36,7 +38,8 @@
 #'                             experiment_labels = as.numeric(factor(mn_data$study_id)),
 #'                             celltype_labels = metadata(colData(mn_data))[["cell_labels"]],
 #'                             genesets = GOmouse,
-#'                             bplot = TRUE)
+#'                             bplot = TRUE,
+#'                             fast_version=FALSE)
 #' @export
 #'
 
